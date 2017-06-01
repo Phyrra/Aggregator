@@ -13,7 +13,8 @@
   "license": "MIT",
   "ignore": [
     "bower_components",
-    "specs"
+    "specs",
+    "jasmine.html"
   ],
   "dependencies": {},
   "devDependencies": {
