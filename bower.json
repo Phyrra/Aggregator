@@ -1,6 +1,6 @@
 {
   "name": "sama-aggregator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [
     "Sandro.Maggi"
   ],
@@ -12,6 +12,7 @@
   ],
   "license": "MIT",
   "ignore": [
+    ".gitignore",
     "bower_components",
     "specs",
     "jasmine.html"
