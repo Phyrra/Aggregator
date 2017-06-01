@@ -1,0 +1,21 @@
+{
+  "name": "Aggregator",
+  "version": "0.1.0",
+  "authors": [
+    "Sandro.Maggi"
+  ],
+  "description": "Data aggregation library",
+  "private": false,
+  "keywords": [
+    "data",
+    "aggregation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "bower_components"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-core": "jasmine#^2.6.2"
+  }
+}
