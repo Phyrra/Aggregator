@@ -1,6 +1,6 @@
 {
   "name": "sama-aggregator",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "authors": [
     "Sandro.Maggi"
   ],
@@ -12,7 +12,8 @@
   ],
   "license": "MIT",
   "ignore": [
-    "bower_components"
+    "bower_components",
+    "specs"
   ],
   "dependencies": {},
   "devDependencies": {
