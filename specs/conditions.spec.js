@@ -88,4 +88,64 @@ describe('conditions', function() {
 				.toEqual([1, 3]);
 		});
 	});
+
+	describe('all()', function() {
+		it('should filter elements where all values match', function() {
+			var data = [
+				{ a: 2, b: 4 },
+				{ a: 1, b: 2 },
+				{ a: 2, b: 1 },
+				{ a: 1, b: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 === 0;
+			};
+
+			var keys = [
+				'a',
+				function(elem) {
+					return elem.b;
+				}
+			];
+
+			expect(aggregator.where(keys, all(match)).toArray())
+				.toEqual([
+					{ a: 2, b: 4 }
+				]);
+		});
+	});
+
+	describe('one()', function() {
+		it('should filter elements where at least one value matches', function() {
+			var data = [
+				{ a: 2, b: 4 },
+				{ a: 1, b: 2 },
+				{ a: 2, b: 1 },
+				{ a: 1, b: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 === 0;
+			};
+
+			var keys = [
+				'a',
+				function(elem) {
+					return elem.b;
+				}
+			];
+
+			expect(aggregator.where(keys, one(match)).toArray())
+				.toEqual([
+					{ a: 2, b: 4 },
+					{ a: 1, b: 2 },
+					{ a: 2, b: 1 }
+				]);
+		});
+	});
 });
