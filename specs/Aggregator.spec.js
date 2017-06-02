@@ -135,6 +135,110 @@ describe('Aggregator', function() {
 				.toEqual([3, 2, 1]);
 		});
 	});
+
+	describe('.has()', function() {
+		var match = function(value) {
+			return value % 2 === 0;
+		};
+
+		describe('without key', function() {
+			it('should yield true if there is one match', function() {
+				var data = [1, 2, 3];
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.has(match))
+					.toBe(true);
+			});
+
+			it('should not yield true if there are no matches', function() {
+				var data = [1, 3, 5];
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.has(match))
+					.toBe(false);
+			});
+		});
+
+		describe('with key', function() {
+			it('should yield true if one value matches', function() {
+				var data = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.has('value', match))
+					.toBe(true);
+			});
+
+			it('should not yield true if none of the values matches', function() {
+				var data = [
+					{ value: 1 },
+					{ value: 3 },
+					{ value: 5 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.has('value', match))
+					.toBe(false);
+			});
+		});
+	});
+
+	describe('.all()', function() {
+		var match = function(value) {
+			return value % 2 === 0;
+		};
+
+		describe('without key', function() {
+			it('should yield true if all elements match', function() {
+				var data = [2, 4, 6];
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.all(match))
+					.toBe(true);
+			});
+
+			it('should not yield true if there is one mismatch', function() {
+				var data = [1, 2, 4];
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.all(match))
+					.toBe(false);
+			});
+		});
+
+		describe('with key', function() {
+			it('should yield true if all values match', function() {
+				var data = [
+					{ value: 2 },
+					{ value: 4 },
+					{ value: 6 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.all('value', match))
+					.toBe(true);
+			});
+
+			it('should not yield true if one value does not match', function() {
+				var data = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 4 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.all('value', match))
+					.toBe(false);
+			});
+		});
+	});
 	
 	describe('.count()', function() {
 		it('should return the length of the data', function() {
