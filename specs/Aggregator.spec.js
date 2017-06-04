@@ -87,27 +87,6 @@ describe('Aggregator', function() {
 	});
 	
 	describe('.sort()', function() {
-		it('should sort a list with a comparator', function() {
-			var data = [
-				{ value: 3 },
-				{ value: 2 },
-				{ value: 1 }
-			];
-			
-			var aggregator = new Aggregator(data);
-			
-			var sort = function(lhs, rhs) {
-				return lhs.value - rhs.value;
-			};
-			
-			expect(aggregator.sort(sort).toArray())
-				.toEqual([
-					{ value: 1 },
-					{ value: 2 },
-					{ value: 3 }
-				]);
-		});
-		
 		it('should sort a list by a field', function() {
 			var data = [
 				{ value: 3 },
@@ -122,6 +101,46 @@ describe('Aggregator', function() {
 					{ value: 1 },
 					{ value: 2 },
 					{ value: 3 }
+				]);
+		});
+
+		it('should sort a list with a function', function() {
+			var data = [
+				{ value: 3 },
+				{ value: 2 },
+				{ value: 1 }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			var value = function(element) {
+				return element.value;
+			};
+			
+			expect(aggregator.sort(value).toArray())
+				.toEqual([
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				]);
+		});
+
+		it('shourt sort a list by multiple fields', function() {
+			var data = [
+				{ value1: 2, value2: 2 },
+				{ value1: 2, value2: 1 },
+				{ value1: 1, value2: 2 },
+				{ value1: 1, value2: 1 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.sort('value1', 'value2').toArray())
+				.toEqual([
+					{ value1: 1, value2: 1 },
+					{ value1: 1, value2: 2 },
+					{ value1: 2, value2: 1 },
+					{ value1: 2, value2: 2 }
 				]);
 		});
 	});
