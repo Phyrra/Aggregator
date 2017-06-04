@@ -16,7 +16,7 @@ describe('conditions', function() {
 
 			expect(result)
 				.toEqual([{ value: 2 }]);
-		})
+		});
 	});
 	
 	describe('neq()', function() {
@@ -260,7 +260,7 @@ describe('conditions', function() {
 					{ a: 2, b: 4 },
 					{ a: 1, b: 2 },
 					{ a: 2, b: 1 }
-				])
+				]);
 		});
 	});
 });

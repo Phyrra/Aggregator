@@ -462,7 +462,7 @@ describe('Aggregator', function() {
 			var group = aggregator.group('gender');
 			
 			expect(group.keys())
-				.toEqual([ 'M', 'F' ]);
+				.toEqual(['M', 'F']);
 				
 			expect(group.get('F').toArray())
 				.toEqual([
@@ -487,14 +487,10 @@ describe('Aggregator', function() {
 			
 			var aggregator = new Aggregator(data);
 			
-			var key = function(value) {
-				return value.gender;
-			};
-			
 			var group = aggregator.group('gender');
 			
 			expect(group.keys())
-				.toEqual([ 'M', 'F' ]);
+				.toEqual(['M', 'F']);
 				
 			expect(group.get('F').toArray())
 				.toEqual([
@@ -535,10 +531,33 @@ describe('Aggregator', function() {
 			expect(result.get('F').get('29').constructor).toBe(Aggregator);
 			expect(result.get('F').get('17').constructor).toBe(Aggregator);
 
-			expect(result.get('M').get('17').toArray()).toEqual([ data[0], data[7] ]);
-			expect(result.get('M').get('23').toArray()).toEqual([ data[1], data[5] ]);
-			expect(result.get('F').get('29').toArray()).toEqual([ data[2], data[6] ]);
-			expect(result.get('F').get('17').toArray()).toEqual([ data[3], data[4] ]);
+			expect(
+				result
+					.get('M')
+					.get('17')
+					.toArray()
+			).toEqual([data[0], data[7]]);
+
+			expect(
+				result
+					.get('M')
+					.get('23')
+					.toArray()
+			).toEqual([data[1], data[5]]);
+
+			expect(
+				result
+					.get('F')
+					.get('29')
+					.toArray()
+			).toEqual([data[2], data[6]]);
+
+			expect(
+				result
+					.get('F')
+					.get('17')
+					.toArray()
+			).toEqual([data[3], data[4]]);
 		});
 	});
 	

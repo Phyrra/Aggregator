@@ -13,6 +13,7 @@
   "license": "MIT",
   "ignore": [
     ".gitignore",
+    ".eslintrc",
     "bower_components",
     "specs",
     "jasmine.html"
