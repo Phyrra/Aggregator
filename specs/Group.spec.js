@@ -1,3 +1,6 @@
+/* global
+	Group
+*/
 describe('Group', function() {
 	var obj = {
 		'a': [1, 2, 3],

@@ -1,3 +1,7 @@
+/* global
+	Aggregator
+	Group
+*/
 describe('Aggregator', function() {
 	it('should be an aggregator', function() {
 		var data = [1, 2, 3];

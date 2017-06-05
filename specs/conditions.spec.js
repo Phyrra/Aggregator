@@ -1,3 +1,18 @@
+/* global
+	Aggregator
+	eq
+	neq
+	gt
+	lt
+	gte
+	lte
+	isNull
+	not
+	and
+	or
+	all
+	one
+*/
 describe('conditions', function() {
 	describe('eq()', function() {
 		it('should return elements equal to the reference', function() {
