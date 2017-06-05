@@ -1,6 +1,6 @@
 {
   "name": "sama-aggregator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "authors": [
     "Sandro.Maggi"
   ],
@@ -20,7 +20,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "jasmine-core": "jasmine#^2.6.2"
+    "jasmine-core": "jasmine#2.6.2"
   },
   "homepage": "https://github.com/Phyrra/Aggregator"
 }

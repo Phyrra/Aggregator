@@ -13,7 +13,7 @@
 	all
 	one
 */
-describe('conditions', function() {
+describe('matchers', function() {
 	describe('eq()', function() {
 		it('should return elements equal to the reference', function() {
 			var result = [1, 2, 3].filter(eq(2));
