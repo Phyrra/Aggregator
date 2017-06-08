@@ -271,6 +271,35 @@ describe('Aggregator', function() {
 			expect(aggregator.count())
 				.toBe(3);
 		});
+
+		it('should only count elements that match the given condition', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 !== 0;
+			};
+
+			expect(aggregator.count(match))
+				.toBe(2);
+		});
+
+		it('should only count elements where values match the given condition', function() {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 !== 0;
+			};
+
+			expect(aggregator.count('value', match))
+				.toBe(2);
+		});
 	});
 	
 	describe('.sum()', function() {
