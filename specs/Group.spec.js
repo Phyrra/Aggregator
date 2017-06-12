@@ -89,4 +89,19 @@ describe('Group', function() {
 			expect(Object.keys(map).length).toBe(2);
 		});
 	});
+
+	describe('.toAggregator()', function() {
+		it('should turn the group into an Aggregator with key and items', function() {
+			expect(group.toAggregator().toArray())
+				.toEqual([
+					{
+						_key: 'a',
+						_items: [1, 2, 3]
+					}, {
+						_key: 'b',
+						_items: [4, 5, 6]
+					}
+				]);
+		});
+	});
 });
