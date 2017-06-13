@@ -43,6 +43,44 @@ describe('Aggregator', function() {
 			expect(aggregator.find('value', condition))
 				.toEqual({ value: 2 });
 		});
+
+		describe('matching with an object', function() {
+			it('should find an element where a single key matches a value', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.find({ b: 2 }))
+					.toEqual({ a: 2, b: 2 });
+			});
+
+			it('should find an element where a single key matches a function', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.find({ b: condition }))
+					.toEqual({ a: 2, b: 2 });
+			});
+
+			it('should find an element where multiple keys match', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.find({ a: 2, b: condition }))
+					.toEqual({ a: 2, b: 2 });
+			});
+		});
 	});
 	
 	describe('.where()', function() {
@@ -73,6 +111,50 @@ describe('Aggregator', function() {
 					{ value: 2 },
 					{ value: 4 }
 				]);
+		});
+
+		describe('matching with an object', function() {
+			it('should find an element where a single key matches a value', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.where({ b: 2 }).toArray())
+					.toEqual([
+						{ a: 2, b: 2 }
+					]);
+			});
+
+			it('should find an element where a single key matches a function', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.where({ b: condition }).toArray())
+					.toEqual([
+						{ a: 2, b: 2 }
+					]);
+			});
+
+			it('should find an element where multiple keys match', function() {
+				var data = [
+					{ a: 1, b: 1 },
+					{ a: 2, b: 2 }
+				];
+
+				var aggregator = new Aggregator(data);
+
+				expect(aggregator.where({ a: 2, b: condition }).toArray())
+					.toEqual([
+						{ a: 2, b: 2 }
+					]);
+			});
 		});
 	});
 	
