@@ -22,8 +22,8 @@ describe('Aggregator', function() {
 			expect(aggregator.find(condition))
 				.toEqual(2);
 		});
-		
-		it('should find only one value', function() {
+
+		it('should find only one value if multiple match', function() {
 			var data = [1, 2, 2, 3];
 			var aggregator = new Aggregator(data);
 			
@@ -41,6 +41,19 @@ describe('Aggregator', function() {
 			var aggregator = new Aggregator(data);
 			
 			expect(aggregator.find('value', condition))
+				.toEqual({ value: 2 });
+		});
+
+		it('should find a matching value in an object', function() {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.find('value', 2))
 				.toEqual({ value: 2 });
 		});
 
@@ -88,7 +101,7 @@ describe('Aggregator', function() {
 			return value % 2 === 0;
 		};
 		
-		it('should filter out matches', function() {
+		it('should filter values', function() {
 			var data = [1, 2, 3, 4];
 			var aggregator = new Aggregator(data);
 			
@@ -96,7 +109,7 @@ describe('Aggregator', function() {
 				.toEqual([2, 4]);
 		});
 		
-		it('should filter matches in a value', function() {
+		it('should filter values in an object', function() {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -110,6 +123,21 @@ describe('Aggregator', function() {
 				.toEqual([
 					{ value: 2 },
 					{ value: 4 }
+				]);
+		});
+
+		it('should filter matching values in an object', function() {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.where('value', 2).toArray())
+				.toEqual([
+					{ value: 2 }
 				]);
 		});
 
