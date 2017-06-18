@@ -57,6 +57,38 @@ describe('Aggregator', function() {
 				.toEqual({ value: 2 });
 		});
 
+		it('should find an element where all values match', function() {
+			var data = [
+				{ a: 1, b: 1 },
+				{ a: 2, b: 2 },
+				{ a: 3, b: 3 }
+			];
+
+			var multiCond = function(values) {
+				return values.every(function(value) {
+					return value === 2;
+				});
+			};
+
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.find(['a', 'b'], multiCond))
+				.toEqual({ a: 2, b: 2 });
+		});
+
+		it('should find an element with a matching list of values', function() {
+			var data = [
+				{ a: 1, b: 1 },
+				{ a: 2, b: 2 },
+				{ a: 3, b: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.find(['a', 'b'], 2))
+				.toEqual({ a: 2, b: 2 });
+		});
+
 		describe('matching with an object', function() {
 			it('should find an element where a single key matches a value', function() {
 				var data = [
@@ -93,6 +125,14 @@ describe('Aggregator', function() {
 				expect(aggregator.find({ a: 2, b: condition }))
 					.toEqual({ a: 2, b: 2 });
 			});
+		});
+
+		it('should return null if no value is found', function() {
+			var data = [1, 3, 5];
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.find(condition))
+				.toBe(null);
 		});
 	});
 	
@@ -138,6 +178,42 @@ describe('Aggregator', function() {
 			expect(aggregator.where('value', 2).toArray())
 				.toEqual([
 					{ value: 2 }
+				]);
+		});
+
+		it('should filter elements where all values match', function() {
+			var data = [
+				{ a: 1, b: 1 },
+				{ a: 2, b: 2 },
+				{ a: 3, b: 3 }
+			];
+
+			var multiCond = function(values) {
+				return values.every(function(value) {
+					return value === 2;
+				});
+			};
+
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.where(['a', 'b'], multiCond).toArray())
+				.toEqual([
+					{ a: 2, b: 2 }
+				]);
+		});
+
+		it('should filter elements with a matching list of values', function() {
+			var data = [
+				{ a: 1, b: 1 },
+				{ a: 2, b: 2 },
+				{ a: 3, b: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.where(['a', 'b'], 2).toArray())
+				.toEqual([
+					{ a: 2, b: 2 }
 				]);
 		});
 
