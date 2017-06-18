@@ -345,6 +345,45 @@ describe('Aggregator', function() {
 		});
 	});
 
+	describe('.count()', function() {
+		it('should return the length of the data', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.count())
+				.toBe(3);
+		});
+
+		it('should only count elements that match the given condition', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 !== 0;
+			};
+
+			expect(aggregator.count(match))
+				.toBe(2);
+		});
+
+		it('should only count elements where values match the given condition', function() {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			var match = function(value) {
+				return value % 2 !== 0;
+			};
+
+			expect(aggregator.count('value', match))
+				.toBe(2);
+		});
+	});
+
 	describe('.has()', function() {
 		var match = function(value) {
 			return value % 2 === 0;
@@ -446,45 +485,6 @@ describe('Aggregator', function() {
 				expect(aggregator.all('value', match))
 					.toBe(false);
 			});
-		});
-	});
-	
-	describe('.count()', function() {
-		it('should return the length of the data', function() {
-			var data = [1, 2, 3];
-			var aggregator = new Aggregator(data);
-			
-			expect(aggregator.count())
-				.toBe(3);
-		});
-
-		it('should only count elements that match the given condition', function() {
-			var data = [1, 2, 3];
-			var aggregator = new Aggregator(data);
-
-			var match = function(value) {
-				return value % 2 !== 0;
-			};
-
-			expect(aggregator.count(match))
-				.toBe(2);
-		});
-
-		it('should only count elements where values match the given condition', function() {
-			var data = [
-				{ value: 1 },
-				{ value: 2 },
-				{ value: 3 }
-			];
-
-			var aggregator = new Aggregator(data);
-
-			var match = function(value) {
-				return value % 2 !== 0;
-			};
-
-			expect(aggregator.count('value', match))
-				.toBe(2);
 		});
 	});
 	
