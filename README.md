@@ -11,7 +11,7 @@ Usage
 
 The `Aggregator` is registered on the `window` object for global access.
 
-For full documentation, please refer to https://aggregator.000webhostapp.com/#/doc/aggregator-sort
+For full documentation, please refer to https://aggregator.000webhostapp.com/
 
 Examples
 ========
