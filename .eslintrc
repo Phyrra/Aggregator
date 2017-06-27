@@ -10,7 +10,7 @@
 		// jasmine globals
 		"describe": false,
 		"it": false,
-        "expect": false
+		"expect": false
 	},
 
 	"env": {
@@ -79,17 +79,17 @@
 		"no-inner-declarations": 2,
 		"no-console": 2,
 		"space-unary-ops": [
-            2,
-            {
-                "words": true,
-                "nonwords": false
-            }
-        ],
+			2,
+			{
+				"words": true,
+				"nonwords": false
+			}
+		],
 		"key-spacing": 2,
 		"comma-style": [
-            2,
-            "last"
-        ],
+			2,
+			"last"
+		],
 		"comma-spacing": 2,
 		"eol-last": 2,
 		"no-alert": 2,
@@ -131,21 +131,21 @@
 			"never"
 		],
 		"padded-blocks": [
-            2,
-            "never"
-        ],
+			2,
+			"never"
+		],
 		"space-before-function-paren": [
-            2,
-            "never"
-        ],
+			2,
+			"never"
+		],
 		"spaced-comment": [
-            2,
-            "always",
-            {
-                "exceptions": ["-", "+"],
-                "markers": ["=", "!"]
-		    }
-        ],
+			2,
+			"always",
+			{
+				"exceptions": ["-", "+"],
+				"markers": ["=", "!"]
+			}
+		],
 		"space-infix-ops": 2,
 		"space-before-blocks": 2,
 		"no-multiple-empty-lines": [
@@ -158,15 +158,15 @@
 		],
 		"no-nested-ternary": 2,
 		"func-names": [
-            2,
-            "never"
-        ],
+			2,
+			"never"
+		],
 		"no-mixed-operators": [
-            2,
-            {
-                "allowSamePrecedence": true
-            }
-        ],
+			2,
+			{
+				"allowSamePrecedence": true
+			}
+		],
 		"func-call-spacing": 2,
 		"no-extra-semi": 2,
 		"no-unreachable": 2,
@@ -176,9 +176,9 @@
 		"no-lonely-if": 2,
 		"array-callback-return": 2,
 		"one-var": [
-            2,
-            "never"
-        ],
+			2,
+			"never"
+		],
 		"no-constant-condition": 2,
 		"no-duplicate-case": 2,
 		"no-empty": 2,

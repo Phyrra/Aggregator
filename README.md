@@ -21,48 +21,48 @@ Examples
 #### A flat list
 ```
 new Aggregator([1, 2, 3, 4, 5])
-    .where(function(item) {
-        return item % 2 === 0;
-    })
-    .toArray();
+	.where(function(item) {
+		return item % 2 === 0;
+	})
+	.toArray();
 ```
 
 #### A list of objects
 ```
 new Aggregator([
-    {
-        name: 'Adam',
-        location: {
-            city: 'Zurich',
-            country: 'Switzerland'
-        }
-    }, {
-        name: 'Beat',
-        location: {
-            city: 'Basel',
-            country: 'Switzerland'
-        }
-    }, {
-        name: 'Clair',
-        location: {
-            city: 'Bishkek',
-            country: 'Kyrgyztan'
-        }
-    }
+	{
+		name: 'Adam',
+		location: {
+			city: 'Zurich',
+			country: 'Switzerland'
+		}
+	}, {
+		name: 'Beat',
+		location: {
+			city: 'Basel',
+			country: 'Switzerland'
+		}
+	}, {
+		name: 'Clair',
+		location: {
+			city: 'Bishkek',
+			country: 'Kyrgyztan'
+		}
+	}
 ])
-    .where('location.country', eq('Switzerland'))
-    .toArray();
+	.where('location.country', eq('Switzerland'))
+	.toArray();
 ```
 
 ### Grouping
 
 ```
 new Aggregator([
-    { gender: 'M', name: 'Adam' },
-    { gender: 'M', name: 'Beat' },
-    { gender: 'F', name: 'Clair' },
-    { gender: 'F', name: 'Delilah' }
+	{ gender: 'M', name: 'Adam' },
+	{ gender: 'M', name: 'Beat' },
+	{ gender: 'F', name: 'Clair' },
+	{ gender: 'F', name: 'Delilah' }
 ])
-    .group('gender')
-    .toMap();
+	.group('gender')
+	.toMap();
 ```

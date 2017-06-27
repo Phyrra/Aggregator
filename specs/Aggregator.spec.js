@@ -274,8 +274,130 @@ describe('Aggregator', function() {
 			expect(aggregator.map(map).toArray())
 				.toEqual([2, 4, 6]);
 		});
+		
+		it('should extract values from elements', function() {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.map('value').toArray())
+				.toEqual([1, 2, 3]);
+		});
 	});
 	
+	describe('.flatMap()', function() {
+		it('should flatten a list of arrays', function() {
+			var data = [
+				[1, 2, 3],
+				[4, 5, 6]
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.flatMap().toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
+		
+		it('should flatten a list of Aggregators', function() {
+			var data = [
+				new Aggregator([1, 2, 3]),
+				new Aggregator([4, 5, 6])
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.flatMap().toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
+		
+		it('should map elements in a list and flatten them', function() {
+			var data = [
+				{ value: [1, 2, 3] },
+				{ value: new Aggregator([4, 5, 6]) }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			expect(aggregator.flatMap('value').toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
+		
+		it('should extract values from elements and flatten them', function() {
+			var data = [
+				{ value: [1, 2, 3] },
+				{ value: new Aggregator([4, 5, 6]) }
+			];
+			
+			var aggregator = new Aggregator(data);
+			
+			var map = function(elem) {
+				return elem.value;
+			};
+			
+			expect(aggregator.flatMap(map).toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
+	});
+	
+	describe('.reduce()', function() {
+		describe('with mapping', function() {
+			it('should sum up mapped elements', function() {
+				var data = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				];
+				
+				var aggregator = new Aggregator(data);
+				
+				var map = function(elem) {
+					return elem.value;
+				};
+				
+				var reducer = function(sum, elem) {
+					return sum + elem;
+				};
+				
+				expect(aggregator.reduce(map, reducer, 0))
+					.toBe(6);
+			});
+			
+			it('should sum up values from a list', function() {
+				var data = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				];
+				
+				var aggregator = new Aggregator(data);
+				
+				var reducer = function(sum, elem) {
+					return sum + elem;
+				};
+				
+				expect(aggregator.reduce('value', reducer, 0))
+					.toBe(6);
+			});
+		});
+		
+		describe('direct', function() {
+			it('should sum up a list', function() {
+				var data = [1, 2, 3];
+				var aggregator = new Aggregator(data);
+				
+				var reducer = function(sum, elem) {
+					return sum + elem;
+				};
+				
+				expect(aggregator.reduce(reducer, 0))
+					.toBe(6);
+			});
+		});
+	});
 	describe('.sort()', function() {
 		it('should sort a list by a field', function() {
 			var data = [
@@ -531,6 +653,28 @@ describe('Aggregator', function() {
 			
 			expect(aggregator.avg('value'))
 				.toBe(2);
+		});
+	});
+	
+	describe('.append()', function() {
+		it('should append an array', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+			
+			var append = [4, 5, 6];
+			
+			expect(aggregator.append(append).toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
+		
+		it('should append another Aggregator', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+			
+			var append = new Aggregator([4, 5, 6]);
+			
+			expect(aggregator.append(append).toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 	});
 	
@@ -834,6 +978,22 @@ describe('Aggregator', function() {
 					'1': { id: 1, value: 'a' },
 					'2': { id: 2, value: 'b' },
 					'3': { id: 3, value: 'c' }
+				});
+		});
+		
+		it('should not overwrite an existing duplicate', function() {
+			var data2 = [
+				{ name: 'A', age: 28 },
+				{ name: 'B', age: 29 },
+				{ name: 'A', age: 31 }
+			];
+			
+			var aggregator = new Aggregator(data2);
+			
+			expect(aggregator.toMap('name'))
+				.toEqual({
+					'A': { name: 'A', age: 28 },
+					'B': { name: 'B', age: 29 }
 				});
 		});
 	});
