@@ -6,10 +6,10 @@ describe('Aggregator', function() {
 	it('should be an aggregator', function() {
 		var data = [1, 2, 3];
 		var aggregator = new Aggregator(data);
-		
+
 		expect(aggregator.constructor).toBe(Aggregator);
 	});
-	
+
 	describe('.find()', function() {
 		var condition = function(value) {
 			return value === 2;
@@ -18,7 +18,7 @@ describe('Aggregator', function() {
 		it('should find a value', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.find(condition))
 				.toEqual(2);
 		});
@@ -26,20 +26,20 @@ describe('Aggregator', function() {
 		it('should find only one value if multiple match', function() {
 			var data = [1, 2, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.find(condition))
 				.toEqual(2);
 		});
-		
+
 		it('should find a value in an object', function() {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.find('value', condition))
 				.toEqual({ value: 2 });
 		});
@@ -50,9 +50,9 @@ describe('Aggregator', function() {
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.find('value', 2))
 				.toEqual({ value: 2 });
 		});
@@ -135,20 +135,20 @@ describe('Aggregator', function() {
 				.toBe(null);
 		});
 	});
-	
+
 	describe('.where()', function() {
 		var condition = function(value) {
 			return value % 2 === 0;
 		};
-		
+
 		it('should filter values', function() {
 			var data = [1, 2, 3, 4];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.where(condition).toArray())
 				.toEqual([2, 4]);
 		});
-		
+
 		it('should filter values in an object', function() {
 			var data = [
 				{ value: 1 },
@@ -156,9 +156,9 @@ describe('Aggregator', function() {
 				{ value: 3 },
 				{ value: 4 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.where('value', condition).toArray())
 				.toEqual([
 					{ value: 2 },
@@ -172,9 +172,9 @@ describe('Aggregator', function() {
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.where('value', 2).toArray())
 				.toEqual([
 					{ value: 2 }
@@ -261,88 +261,88 @@ describe('Aggregator', function() {
 			});
 		});
 	});
-	
+
 	describe('.map()', function() {
 		it('should map elements in a list', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			var map = function(value) {
 				return value * 2;
 			};
-			
+
 			expect(aggregator.map(map).toArray())
 				.toEqual([2, 4, 6]);
 		});
-		
+
 		it('should extract values from elements', function() {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.map('value').toArray())
 				.toEqual([1, 2, 3]);
 		});
 	});
-	
+
 	describe('.flatMap()', function() {
 		it('should flatten a list of arrays', function() {
 			var data = [
 				[1, 2, 3],
 				[4, 5, 6]
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.flatMap().toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
-		
+
 		it('should flatten a list of Aggregators', function() {
 			var data = [
 				new Aggregator([1, 2, 3]),
 				new Aggregator([4, 5, 6])
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.flatMap().toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
-		
+
 		it('should map elements in a list and flatten them', function() {
 			var data = [
 				{ value: [1, 2, 3] },
 				{ value: new Aggregator([4, 5, 6]) }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.flatMap('value').toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
-		
+
 		it('should extract values from elements and flatten them', function() {
 			var data = [
 				{ value: [1, 2, 3] },
 				{ value: new Aggregator([4, 5, 6]) }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			var map = function(elem) {
 				return elem.value;
 			};
-			
+
 			expect(aggregator.flatMap(map).toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 	});
-	
+
 	describe('.reduce()', function() {
 		describe('with mapping', function() {
 			it('should sum up mapped elements', function() {
@@ -351,48 +351,48 @@ describe('Aggregator', function() {
 					{ value: 2 },
 					{ value: 3 }
 				];
-				
+
 				var aggregator = new Aggregator(data);
-				
+
 				var map = function(elem) {
 					return elem.value;
 				};
-				
+
 				var reducer = function(sum, elem) {
 					return sum + elem;
 				};
-				
+
 				expect(aggregator.reduce(map, reducer, 0))
 					.toBe(6);
 			});
-			
+
 			it('should sum up values from a list', function() {
 				var data = [
 					{ value: 1 },
 					{ value: 2 },
 					{ value: 3 }
 				];
-				
+
 				var aggregator = new Aggregator(data);
-				
+
 				var reducer = function(sum, elem) {
 					return sum + elem;
 				};
-				
+
 				expect(aggregator.reduce('value', reducer, 0))
 					.toBe(6);
 			});
 		});
-		
+
 		describe('direct', function() {
 			it('should sum up a list', function() {
 				var data = [1, 2, 3];
 				var aggregator = new Aggregator(data);
-				
+
 				var reducer = function(sum, elem) {
 					return sum + elem;
 				};
-				
+
 				expect(aggregator.reduce(reducer, 0))
 					.toBe(6);
 			});
@@ -405,9 +405,9 @@ describe('Aggregator', function() {
 				{ value: 2 },
 				{ value: 1 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.sort('value').toArray())
 				.toEqual([
 					{ value: 1 },
@@ -422,13 +422,13 @@ describe('Aggregator', function() {
 				{ value: 2 },
 				{ value: 1 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			var value = function(element) {
 				return element.value;
 			};
-			
+
 			expect(aggregator.sort(value).toArray())
 				.toEqual([
 					{ value: 1 },
@@ -456,12 +456,12 @@ describe('Aggregator', function() {
 				]);
 		});
 	});
-	
+
 	describe('.reverse()', function() {
 		it('should reverse the order', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.reverse().toArray())
 				.toEqual([3, 2, 1]);
 		});
@@ -471,7 +471,7 @@ describe('Aggregator', function() {
 		it('should return the length of the data', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.count())
 				.toBe(3);
 		});
@@ -609,84 +609,97 @@ describe('Aggregator', function() {
 			});
 		});
 	});
-	
+
 	describe('.sum()', function() {
 		it('should sum up flat list', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.sum())
 				.toBe(6);
 		});
-		
+
 		it('should sum up a value from an object', function() {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.sum('value'))
 				.toBe(6);
 		});
 	});
-	
+
 	describe('.avg()', function() {
 		it('should average a flat list', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.avg())
 				.toBe(2);
 		});
-		
+
 		it('should average a value from an object', function() {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.avg('value'))
 				.toBe(2);
 		});
 	});
-	
+
 	describe('.append()', function() {
 		it('should append an array', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			var append = [4, 5, 6];
-			
+
 			expect(aggregator.append(append).toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
-		
+
 		it('should append another Aggregator', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			var append = new Aggregator([4, 5, 6]);
-			
+
 			expect(aggregator.append(append).toArray())
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
+
+		it('should append multiple elements', function() {
+			var aggregator = new Aggregator([1, 2]);
+
+			var result = aggregator
+				.append(
+					[3, 4],
+					new Aggregator([5, 6])
+				);
+
+			expect(result.toArray())
+				.toEqual([1, 2, 3, 4, 5, 6]);
+		});
 	});
-	
+
 	describe('.removeDuplicates()', function() {
 		it('should remove duplicates from flat list', function() {
 			var data = [1, 2, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.removeDuplicates().toArray())
 				.toEqual([1, 2, 3]);
 		});
-		
+
 		it('it should remove duplicate keys from a list', function() {
 			var data = [
 				{ id: 1, value: 'a' },
@@ -694,9 +707,9 @@ describe('Aggregator', function() {
 				{ id: 2, value: 'b' },
 				{ id: 3, value: 'c' }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.removeDuplicates('id').toArray())
 				.toEqual([
 					{ id: 1, value: 'a' },
@@ -704,74 +717,74 @@ describe('Aggregator', function() {
 					{ id: 3, value: 'c' }
 				]);
 		});
-		
+
 		it('it should remove duplicate combinations from a list', function() {
 			var data = [
 				{ a: 1, b: 5 },
 				{ a: 2, b: 4 },
 				{ a: 3, b: 3 }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			var combo = function(elem) {
 				return elem.a + elem.b;
 			};
-			
+
 			expect(aggregator.removeDuplicates(combo).toArray())
 				.toEqual([
 					{ a: 1, b: 5 }
 				]);
 		});
 	});
-	
+
 	describe('.getCommonElements()', function() {
 		describe('from object', function() {
 			it('should get common elements from a flat list', function() {
 				var aggregator1 = new Aggregator([1, 2, 3]);
 				var aggregator2 = new Aggregator([2, 3, 4]);
-				
+
 				expect(aggregator1.getCommonElements(aggregator2).toArray())
 					.toEqual([2, 3]);
 			});
-			
+
 			it('should get common elements by a key', function() {
 				var aggregator1 = new Aggregator([
 					{ id: 1, value: 'a' },
 					{ id: 2, value: 'b' },
 					{ id: 3, value: 'c' }
 				]);
-				
+
 				var aggregator2 = new Aggregator([
 					{ id: 2, value: 'b' },
 					{ id: 3, value: 'c' },
 					{ id: 4, value: 'd' }
 				]);
-				
+
 				expect(aggregator1.getCommonElements('id', aggregator2).toArray())
 					.toEqual([
 						{ id: 2, value: 'b' },
 						{ id: 3, value: 'c' }
 					]);
 			});
-			
+
 			it('should get common combination elements', function() {
 				var aggregator1 = new Aggregator([
 					{ a: 1, b: 2 },
 					{ a: 2, b: 2 },
 					{ a: 3, b: 2 }
 				]);
-				
+
 				var aggregator2 = new Aggregator([
 					{ a: 1, b: 3 },
 					{ a: 2, b: 3 },
 					{ a: 3, b: 3 }
 				]);
-				
+
 				var combo = function(elem) {
 					return elem.a + elem.b;
 				};
-				
+
 				expect(aggregator1.getCommonElements(combo, aggregator2).toArray())
 					.toEqual([
 						{ a: 2, b: 2 },
@@ -779,29 +792,29 @@ describe('Aggregator', function() {
 					]);
 			});
 		});
-		
+
 		describe('from constructor', function() {
 			it('should get common elements from flat lists', function() {
 				var aggregator1 = new Aggregator([1, 2, 3]);
 				var aggregator2 = new Aggregator([2, 3, 4]);
-				
+
 				expect(Aggregator.getCommonElements(aggregator1, aggregator2).toArray())
 					.toEqual([2, 3]);
 			});
-			
+
 			it('should get common keys from lists', function() {
 				var aggregator1 = new Aggregator([
 					{ id: 1, value: 'a' },
 					{ id: 2, value: 'b' },
 					{ id: 3, value: 'c' }
 				]);
-				
+
 				var aggregator2 = new Aggregator([
 					{ id: 2, value: 'b' },
 					{ id: 3, value: 'c' },
 					{ id: 4, value: 'd' }
 				]);
-				
+
 				expect(Aggregator.getCommonElements('id', aggregator1, aggregator2).toArray())
 					.toEqual([
 						{ id: 2, value: 'b' },
@@ -810,7 +823,7 @@ describe('Aggregator', function() {
 			});
 		});
 	});
-	
+
 	describe('.group()', function() {
 		it('should group by a field', function() {
 			var data = [
@@ -819,27 +832,27 @@ describe('Aggregator', function() {
 				{ gender: 'F', name: 'Clair' },
 				{ gender: 'F', name: 'Delilah' }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			var group = aggregator.group('gender');
-			
+
 			expect(group.keys())
 				.toEqual(['M', 'F']);
-				
+
 			expect(group.get('F').toArray())
 				.toEqual([
 					{ gender: 'F', name: 'Clair' },
 					{ gender: 'F', name: 'Delilah' }
 				]);
-				
+
 			expect(group.get('M').toArray())
 				.toEqual([
 					{ gender: 'M', name: 'Adam' },
 					{ gender: 'M', name: 'Beat' }
 				]);
 		});
-		
+
 		it('should group by a function', function() {
 			var data = [
 				{ gender: 'M', name: 'Adam' },
@@ -847,20 +860,20 @@ describe('Aggregator', function() {
 				{ gender: 'F', name: 'Clair' },
 				{ gender: 'F', name: 'Delilah' }
 			];
-			
+
 			var aggregator = new Aggregator(data);
-			
+
 			var group = aggregator.group('gender');
-			
+
 			expect(group.keys())
 				.toEqual(['M', 'F']);
-				
+
 			expect(group.get('F').toArray())
 				.toEqual([
 					{ gender: 'F', name: 'Clair' },
 					{ gender: 'F', name: 'Delilah' }
 				]);
-				
+
 			expect(group.get('M').toArray())
 				.toEqual([
 					{ gender: 'M', name: 'Adam' },
@@ -885,7 +898,7 @@ describe('Aggregator', function() {
 			var result = aggregator.group('gender', 'age');
 
 			expect(result.constructor).toBe(Group);
-			
+
 			expect(result.get('M').constructor).toBe(Group);
 			expect(result.get('F').constructor).toBe(Group);
 
@@ -923,41 +936,41 @@ describe('Aggregator', function() {
 			).toEqual([data[3], data[4]]);
 		});
 	});
-	
+
 	describe('.toArray()', function() {
 		it('should return the data as an array', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.toArray())
 				.toEqual([1, 2, 3]);
 		});
-		
+
 		it('should not return the original array', function() {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
-			
+
 			var array = aggregator.toArray();
-			
+
 			expect(array).not.toBe(data);
-			
+
 			data.push(4);
-			
+
 			expect(aggregator.count()).toBe(4);
 			expect(array.length).toBe(3);
 		});
 	});
-	
+
 	describe('.toMap()', function() {
 		var data = [
 			{ id: 1, value: 'a' },
 			{ id: 2, value: 'b' },
 			{ id: 3, value: 'c' }
 		];
-			
+
 		it('should return a map from a string key', function() {
 			var aggregator = new Aggregator(data);
-			
+
 			expect(aggregator.toMap('id'))
 				.toEqual({
 					'1': { id: 1, value: 'a' },
@@ -965,14 +978,14 @@ describe('Aggregator', function() {
 					'3': { id: 3, value: 'c' }
 				});
 		});
-		
+
 		it('sould return a map from a function key', function() {
 			var aggregator = new Aggregator(data);
-			
+
 			var key = function(elem) {
 				return elem.id;
 			};
-			
+
 			expect(aggregator.toMap(key))
 				.toEqual({
 					'1': { id: 1, value: 'a' },
@@ -980,16 +993,16 @@ describe('Aggregator', function() {
 					'3': { id: 3, value: 'c' }
 				});
 		});
-		
+
 		it('should not overwrite an existing duplicate', function() {
 			var data2 = [
 				{ name: 'A', age: 28 },
 				{ name: 'B', age: 29 },
 				{ name: 'A', age: 31 }
 			];
-			
+
 			var aggregator = new Aggregator(data2);
-			
+
 			expect(aggregator.toMap('name'))
 				.toEqual({
 					'A': { name: 'A', age: 28 },

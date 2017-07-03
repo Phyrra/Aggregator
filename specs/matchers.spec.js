@@ -17,7 +17,7 @@ describe('matchers', function() {
 	describe('eq()', function() {
 		it('should return elements equal to the reference', function() {
 			var result = [1, 2, 3].filter(eq(2));
-			
+
 			expect(result)
 				.toEqual([2]);
 		});
@@ -50,11 +50,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('neq()', function() {
 		it('should return elements not equal to the reference', function() {
 			var result = [1, 2, 3].filter(neq(2));
-			
+
 			expect(result)
 				.toEqual([1, 3]);
 		});
@@ -91,11 +91,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('gt()', function() {
 		it('should return elements greater than the reference', function() {
 			var result = [1, 2, 3].filter(gt(2));
-			
+
 			expect(result)
 				.toEqual([3]);
 		});
@@ -130,11 +130,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('lt()', function() {
 		it('should return elements less than the reference', function() {
 			var result = [1, 2, 3].filter(lt(2));
-			
+
 			expect(result)
 				.toEqual([1]);
 		});
@@ -169,11 +169,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('gte()', function() {
 		it('should return elements greater than or equal to the reference', function() {
 			var result = [1, 2, 3].filter(gte(2));
-			
+
 			expect(result)
 				.toEqual([2, 3]);
 		});
@@ -210,11 +210,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('lte()', function() {
 		it('should return elements less than or equal to the reference', function() {
 			var result = [1, 2, 3].filter(lte(2));
-			
+
 			expect(result)
 				.toEqual([1, 2]);
 		});
@@ -251,11 +251,11 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('isNull()', function() {
 		it('should return elements that are defined as null', function() {
 			var result = [1, undefined, null, '', 0].filter(isNull());
-			
+
 			expect(result)
 				.toEqual([undefined, null]);
 		});
@@ -296,20 +296,20 @@ describe('matchers', function() {
 				]);
 		});
 	});
-	
+
 	describe('not()', function() {
 		it('should return elements that are not defined as null', function() {
 			var result = [1, undefined, null, '', 0].filter(not(isNull()));
-			
+
 			expect(result)
 				.toEqual([1, '', 0]);
 		});
 	});
-	
+
 	describe('and()', function() {
 		it('should return results that match both conditions', function() {
 			var result = [1, 2, 3].filter(and(gt(1), gt(2)));
-			
+
 			expect(result)
 				.toEqual([3]);
 		});
@@ -334,12 +334,46 @@ describe('matchers', function() {
 					{ a: 2, b: 2, c: 2 }
 				]);
 		});
+
+		it('should allow multiple conditions', function() {
+			var match1 = function(value) {
+				return value % 2 === 0;
+			};
+
+			var match2 = function(value) {
+				return value % 3 === 0;
+			};
+
+			var match3 = function(value) {
+				return value > 10;
+			};
+
+			var result = [2, 4, 6, 8, 10, 12]
+				.filter(and(match1, match2, match3));
+
+			expect(result)
+				.toEqual([12]);
+		});
+
+		it('should stop at the first false result', function() {
+			var match1 = jasmine.createSpy('match1')
+				.and.returnValue(false);
+
+			var match2 = jasmine.createSpy('match2')
+				.and.returnValue(true);
+
+			[1, 2, 3]
+				.filter(and(match1, match2));
+
+			expect(match1).toHaveBeenCalledTimes(3);
+			expect(match2).toHaveBeenCalledTimes(0);
+		});
 	});
-	
+
 	describe('or()', function() {
 		it('should return results matching either condition', function() {
 			var result = [1, 2, 3].filter(or(lt(2), gt(2)));
-			
+
 			expect(result)
 				.toEqual([1, 3]);
 		});
@@ -363,6 +397,40 @@ describe('matchers', function() {
 					{ a: 2, b: 2, c: 1 },
 					{ a: 1, b: 1, c: 2 }
 				]);
+		});
+
+		it('should allow multiple conditions', function() {
+			var match1 = function(value) {
+				return value % 2 === 0;
+			};
+
+			var match2 = function(value) {
+				return value % 3 === 0;
+			};
+
+			var match3 = function(value) {
+				return value > 10;
+			};
+
+			var result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+				.filter(or(match1, match2, match3));
+
+			expect(result)
+				.toEqual([2, 3, 4, 6, 8, 9, 10, 11, 12]);
+		});
+
+		it('should stop at the first true result', function() {
+			var match1 = jasmine.createSpy('match1')
+				.and.returnValue(true);
+
+			var match2 = jasmine.createSpy('match2')
+				.and.returnValue(false);
+
+			[1, 2, 3]
+				.filter(or(match1, match2));
+
+			expect(match1).toHaveBeenCalledTimes(3);
+			expect(match2).toHaveBeenCalledTimes(0);
 		});
 	});
 
