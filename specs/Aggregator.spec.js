@@ -10,6 +10,70 @@ describe('Aggregator', function() {
 		expect(aggregator.constructor).toBe(Aggregator);
 	});
 
+	describe('accessing elements', function() {
+		var data = [{
+			base: {
+				nested: 1,
+				arr: [1, 2, 3]
+			}
+		}];
+
+		var aggregator = new Aggregator(data);
+
+		it('should find a single key', function() {
+			var result = aggregator.map('base').toArray()[0];
+
+			expect(result).toEqual({
+				nested: 1,
+				arr: [1, 2, 3]
+			});
+		});
+
+		describe('nesting', function() {
+			it('should find a nested key', function() {
+				var result = aggregator.map('base.nested').toArray()[0];
+
+				expect(result).toEqual(1);
+			});
+
+			it('should return undefined if the nested key does not exist', function() {
+				var result = aggregator.map('base.none.none').toArray()[0];
+
+				expect(result).toBeUndefined();
+			});
+		});
+
+		describe('array accessor', function() {
+			it('should find an array element', function() {
+				var result = aggregator.map('base.arr[1]').toArray()[0];
+
+				expect(result).toEqual(2);
+			});
+
+			it('should throw an error if the array accessor is not well formatted', function() {
+				var thrower = function() {
+					aggregator.map('base.arr[1]m');
+				};
+
+				expect(thrower).toThrow();
+			});
+
+			it('should throw an error if the array accessor tries to access a non array', function() {
+				var thrower = function() {
+					aggregator.map('base.nested[1]');
+				};
+
+				expect(thrower).toThrow();
+			});
+
+			it('should return undefined if the array accessor tries to access an undefined array', function() {
+				var result = aggregator.map('base.none[1]').toArray()[0];
+
+				expect(result).toBeUndefined();
+			});
+		});
+	});
+
 	describe('.find()', function() {
 		var condition = function(value) {
 			return value === 2;
