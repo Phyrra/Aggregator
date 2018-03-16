@@ -74,6 +74,45 @@ describe('Aggregator', function() {
 		});
 	});
 
+	describe('.forEach()', function() {
+		var spy = jasmine.createSpy('spy');
+
+		var action = function(value) {
+			spy(value);
+		};
+
+		beforeEach(() => {
+			spy.calls.reset();
+		});
+
+		it('should execute the function', function() {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+
+			aggregator.forEach(action);
+
+			expect(spy).toHaveBeenCalledWith(1);
+			expect(spy).toHaveBeenCalledWith(2);
+			expect(spy).toHaveBeenCalledWith(3);
+		});
+
+		it('should execute a function on a vaue in an object', () => {
+			var data = [
+				{ value: 1 },
+				{ value: 2 },
+				{ value: 3 }
+			];
+
+			var aggregator = new Aggregator(data);
+
+			aggregator.forEach('value', action);
+
+			expect(spy).toHaveBeenCalledWith(1);
+			expect(spy).toHaveBeenCalledWith(2);
+			expect(spy).toHaveBeenCalledWith(3);
+		});
+	});
+
 	describe('.find()', function() {
 		var condition = function(value) {
 			return value === 2;
