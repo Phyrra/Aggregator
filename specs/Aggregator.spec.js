@@ -560,6 +560,20 @@ describe('Aggregator', function() {
 		});
 	});
 
+	describe('.sortWith()', function() {
+		var sorter = function(a, b) {
+			return a - b;
+		};
+
+		it('should use the sorting function', function() {
+			var data = [3, 2, 1];
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.sortWith(sorter).toArray())
+				.toEqual([1, 2, 3]);
+		});
+	});
+
 	describe('.reverse()', function() {
 		it('should reverse the order', function() {
 			var data = [1, 2, 3];
