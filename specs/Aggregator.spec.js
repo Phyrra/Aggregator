@@ -2,15 +2,15 @@
 	Aggregator
 	Group
 */
-describe('Aggregator', function() {
-	it('should be an aggregator', function() {
+describe('Aggregator', () => {
+	it('should be an aggregator', () => {
 		var data = [1, 2, 3];
 		var aggregator = new Aggregator(data);
 
 		expect(aggregator.constructor).toBe(Aggregator);
 	});
 
-	describe('accessing elements', function() {
+	describe('accessing elements', () => {
 		var data = [{
 			base: {
 				nested: 1,
@@ -20,7 +20,7 @@ describe('Aggregator', function() {
 
 		var aggregator = new Aggregator(data);
 
-		it('should find a single key', function() {
+		it('should find a single key', () => {
 			var result = aggregator.map('base').toArray()[0];
 
 			expect(result).toEqual({
@@ -29,28 +29,28 @@ describe('Aggregator', function() {
 			});
 		});
 
-		describe('nesting', function() {
-			it('should find a nested key', function() {
+		describe('nesting', () => {
+			it('should find a nested key', () => {
 				var result = aggregator.map('base.nested').toArray()[0];
 
 				expect(result).toEqual(1);
 			});
 
-			it('should return undefined if the nested key does not exist', function() {
+			it('should return undefined if the nested key does not exist', () => {
 				var result = aggregator.map('base.none.none').toArray()[0];
 
 				expect(result).toBeUndefined();
 			});
 		});
 
-		describe('array accessor', function() {
-			it('should find an array element', function() {
+		describe('array accessor', () => {
+			it('should find an array element', () => {
 				var result = aggregator.map('base.arr[1]').toArray()[0];
 
 				expect(result).toEqual(2);
 			});
 
-			it('should throw an error if the array accessor is not well formatted', function() {
+			it('should throw an error if the array accessor is not well formatted', () => {
 				var thrower = function() {
 					aggregator.map('base.arr[1]m');
 				};
@@ -58,7 +58,7 @@ describe('Aggregator', function() {
 				expect(thrower).toThrow();
 			});
 
-			it('should throw an error if the array accessor tries to access a non array', function() {
+			it('should throw an error if the array accessor tries to access a non array', () => {
 				var thrower = function() {
 					aggregator.map('base.nested[1]');
 				};
@@ -66,7 +66,7 @@ describe('Aggregator', function() {
 				expect(thrower).toThrow();
 			});
 
-			it('should return undefined if the array accessor tries to access an undefined array', function() {
+			it('should return undefined if the array accessor tries to access an undefined array', () => {
 				var result = aggregator.map('base.none[1]').toArray()[0];
 
 				expect(result).toBeUndefined();
@@ -74,7 +74,7 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.forEach()', function() {
+	describe('.forEach()', () => {
 		var spy = jasmine.createSpy('spy');
 
 		var action = function(value) {
@@ -85,7 +85,7 @@ describe('Aggregator', function() {
 			spy.calls.reset();
 		});
 
-		it('should execute the function', function() {
+		it('should execute the function', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -113,12 +113,12 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.find()', function() {
+	describe('.find()', () => {
 		var condition = function(value) {
 			return value === 2;
 		};
 
-		it('should find a value', function() {
+		it('should find a value', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -126,7 +126,7 @@ describe('Aggregator', function() {
 				.toEqual(2);
 		});
 
-		it('should find only one value if multiple match', function() {
+		it('should find only one value if multiple match', () => {
 			var data = [1, 2, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -134,7 +134,7 @@ describe('Aggregator', function() {
 				.toEqual(2);
 		});
 
-		it('should find a value in an object', function() {
+		it('should find a value in an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -147,7 +147,7 @@ describe('Aggregator', function() {
 				.toEqual({ value: 2 });
 		});
 
-		it('should find a matching value in an object', function() {
+		it('should find a matching value in an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -160,7 +160,7 @@ describe('Aggregator', function() {
 				.toEqual({ value: 2 });
 		});
 
-		it('should find an element where all values match', function() {
+		it('should find an element where all values match', () => {
 			var data = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
@@ -179,7 +179,7 @@ describe('Aggregator', function() {
 				.toEqual({ a: 2, b: 2 });
 		});
 
-		it('should find an element with a matching list of values', function() {
+		it('should find an element with a matching list of values', () => {
 			var data = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
@@ -192,8 +192,8 @@ describe('Aggregator', function() {
 				.toEqual({ a: 2, b: 2 });
 		});
 
-		describe('matching with an object', function() {
-			it('should find an element where a single key matches a value', function() {
+		describe('matching with an object', () => {
+			it('should find an element where a single key matches a value', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -205,7 +205,7 @@ describe('Aggregator', function() {
 					.toEqual({ a: 2, b: 2 });
 			});
 
-			it('should find an element where a single key matches a function', function() {
+			it('should find an element where a single key matches a function', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -217,7 +217,7 @@ describe('Aggregator', function() {
 					.toEqual({ a: 2, b: 2 });
 			});
 
-			it('should find an element where multiple keys match', function() {
+			it('should find an element where multiple keys match', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -230,7 +230,7 @@ describe('Aggregator', function() {
 			});
 		});
 
-		it('should return null if no value is found', function() {
+		it('should return null if no value is found', () => {
 			var data = [1, 3, 5];
 			var aggregator = new Aggregator(data);
 
@@ -239,12 +239,12 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.where()', function() {
+	describe('.where()', () => {
 		var condition = function(value) {
 			return value % 2 === 0;
 		};
 
-		it('should filter values', function() {
+		it('should filter values', () => {
 			var data = [1, 2, 3, 4];
 			var aggregator = new Aggregator(data);
 
@@ -252,7 +252,7 @@ describe('Aggregator', function() {
 				.toEqual([2, 4]);
 		});
 
-		it('should filter values in an object', function() {
+		it('should filter values in an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -269,7 +269,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should filter matching values in an object', function() {
+		it('should filter matching values in an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -284,7 +284,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should filter elements where all values match', function() {
+		it('should filter elements where all values match', () => {
 			var data = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
@@ -305,7 +305,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should filter elements with a matching list of values', function() {
+		it('should filter elements with a matching list of values', () => {
 			var data = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
@@ -320,8 +320,8 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		describe('matching with an object', function() {
-			it('should find an element where a single key matches a value', function() {
+		describe('matching with an object', () => {
+			it('should find an element where a single key matches a value', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -335,7 +335,7 @@ describe('Aggregator', function() {
 					]);
 			});
 
-			it('should find an element where a single key matches a function', function() {
+			it('should find an element where a single key matches a function', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -349,7 +349,7 @@ describe('Aggregator', function() {
 					]);
 			});
 
-			it('should find an element where multiple keys match', function() {
+			it('should find an element where multiple keys match', () => {
 				var data = [
 					{ a: 1, b: 1 },
 					{ a: 2, b: 2 }
@@ -365,8 +365,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.map()', function() {
-		it('should map elements in a list', function() {
+	describe('.map()', () => {
+		it('should map elements in a list', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -378,7 +378,7 @@ describe('Aggregator', function() {
 				.toEqual([2, 4, 6]);
 		});
 
-		it('should extract values from elements', function() {
+		it('should extract values from elements', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -392,8 +392,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.flatMap()', function() {
-		it('should flatten a list of arrays', function() {
+	describe('.flatMap()', () => {
+		it('should flatten a list of arrays', () => {
 			var data = [
 				[1, 2, 3],
 				[4, 5, 6]
@@ -405,7 +405,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 
-		it('should flatten a list of Aggregators', function() {
+		it('should flatten a list of Aggregators', () => {
 			var data = [
 				new Aggregator([1, 2, 3]),
 				new Aggregator([4, 5, 6])
@@ -417,7 +417,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 
-		it('should map elements in a list and flatten them', function() {
+		it('should map elements in a list and flatten them', () => {
 			var data = [
 				{ value: [1, 2, 3] },
 				{ value: new Aggregator([4, 5, 6]) }
@@ -429,7 +429,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 
-		it('should extract values from elements and flatten them', function() {
+		it('should extract values from elements and flatten them', () => {
 			var data = [
 				{ value: [1, 2, 3] },
 				{ value: new Aggregator([4, 5, 6]) }
@@ -446,9 +446,9 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.reduce()', function() {
-		describe('with mapping', function() {
-			it('should sum up mapped elements', function() {
+	describe('.reduce()', () => {
+		describe('with mapping', () => {
+			it('should sum up mapped elements', () => {
 				var data = [
 					{ value: 1 },
 					{ value: 2 },
@@ -469,7 +469,7 @@ describe('Aggregator', function() {
 					.toBe(6);
 			});
 
-			it('should sum up values from a list', function() {
+			it('should sum up values from a list', () => {
 				var data = [
 					{ value: 1 },
 					{ value: 2 },
@@ -487,8 +487,8 @@ describe('Aggregator', function() {
 			});
 		});
 
-		describe('direct', function() {
-			it('should sum up a list', function() {
+		describe('direct', () => {
+			it('should sum up a list', () => {
 				var data = [1, 2, 3];
 				var aggregator = new Aggregator(data);
 
@@ -501,8 +501,8 @@ describe('Aggregator', function() {
 			});
 		});
 	});
-	describe('.sort()', function() {
-		it('should sort a list by a field', function() {
+	describe('.sort()', () => {
+		it('should sort a list by a field', () => {
 			var data = [
 				{ value: 3 },
 				{ value: 2 },
@@ -519,7 +519,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should sort a list with a function', function() {
+		it('should sort a list with a function', () => {
 			var data = [
 				{ value: 3 },
 				{ value: 2 },
@@ -540,7 +540,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('shourt sort a list by multiple fields', function() {
+		it('shourt sort a list by multiple fields', () => {
 			var data = [
 				{ value1: 2, value2: 2 },
 				{ value1: 2, value2: 1 },
@@ -560,12 +560,12 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.sortWith()', function() {
+	describe('.sortWith()', () => {
 		var sorter = function(a, b) {
 			return a - b;
 		};
 
-		it('should use the sorting function', function() {
+		it('should use the sorting function', () => {
 			var data = [3, 2, 1];
 			var aggregator = new Aggregator(data);
 
@@ -574,8 +574,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.reverse()', function() {
-		it('should reverse the order', function() {
+	describe('.reverse()', () => {
+		it('should reverse the order', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -584,8 +584,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.count()', function() {
-		it('should return the length of the data', function() {
+	describe('.count()', () => {
+		it('should return the length of the data', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -593,7 +593,7 @@ describe('Aggregator', function() {
 				.toBe(3);
 		});
 
-		it('should only count elements that match the given condition', function() {
+		it('should only count elements that match the given condition', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -605,7 +605,7 @@ describe('Aggregator', function() {
 				.toBe(2);
 		});
 
-		it('should only count elements where values match the given condition', function() {
+		it('should only count elements where values match the given condition', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -623,13 +623,13 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.has()', function() {
+	describe('.has()', () => {
 		var match = function(value) {
 			return value % 2 === 0;
 		};
 
-		describe('without key', function() {
-			it('should yield true if there is one match', function() {
+		describe('without key', () => {
+			it('should yield true if there is one match', () => {
 				var data = [1, 2, 3];
 				var aggregator = new Aggregator(data);
 
@@ -637,7 +637,7 @@ describe('Aggregator', function() {
 					.toBe(true);
 			});
 
-			it('should not yield true if there are no matches', function() {
+			it('should not yield true if there are no matches', () => {
 				var data = [1, 3, 5];
 				var aggregator = new Aggregator(data);
 
@@ -646,8 +646,8 @@ describe('Aggregator', function() {
 			});
 		});
 
-		describe('with key', function() {
-			it('should yield true if one value matches', function() {
+		describe('with key', () => {
+			it('should yield true if one value matches', () => {
 				var data = [
 					{ value: 1 },
 					{ value: 2 },
@@ -660,7 +660,7 @@ describe('Aggregator', function() {
 					.toBe(true);
 			});
 
-			it('should not yield true if none of the values matches', function() {
+			it('should not yield true if none of the values matches', () => {
 				var data = [
 					{ value: 1 },
 					{ value: 3 },
@@ -675,13 +675,13 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.all()', function() {
+	describe('.all()', () => {
 		var match = function(value) {
 			return value % 2 === 0;
 		};
 
-		describe('without key', function() {
-			it('should yield true if all elements match', function() {
+		describe('without key', () => {
+			it('should yield true if all elements match', () => {
 				var data = [2, 4, 6];
 				var aggregator = new Aggregator(data);
 
@@ -689,7 +689,7 @@ describe('Aggregator', function() {
 					.toBe(true);
 			});
 
-			it('should not yield true if there is one mismatch', function() {
+			it('should not yield true if there is one mismatch', () => {
 				var data = [1, 2, 4];
 				var aggregator = new Aggregator(data);
 
@@ -698,8 +698,8 @@ describe('Aggregator', function() {
 			});
 		});
 
-		describe('with key', function() {
-			it('should yield true if all values match', function() {
+		describe('with key', () => {
+			it('should yield true if all values match', () => {
 				var data = [
 					{ value: 2 },
 					{ value: 4 },
@@ -712,7 +712,7 @@ describe('Aggregator', function() {
 					.toBe(true);
 			});
 
-			it('should not yield true if one value does not match', function() {
+			it('should not yield true if one value does not match', () => {
 				var data = [
 					{ value: 1 },
 					{ value: 2 },
@@ -727,7 +727,7 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.size()', function() {
+	describe('.size()', () => {
 		it('should return the size of the Aggregator', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
@@ -736,8 +736,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.sum()', function() {
-		it('should sum up flat list', function() {
+	describe('.sum()', () => {
+		it('should sum up flat list', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -745,7 +745,7 @@ describe('Aggregator', function() {
 				.toBe(6);
 		});
 
-		it('should sum up a value from an object', function() {
+		it('should sum up a value from an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -759,8 +759,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.avg()', function() {
-		it('should average a flat list', function() {
+	describe('.avg()', () => {
+		it('should average a flat list', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -768,7 +768,7 @@ describe('Aggregator', function() {
 				.toBe(2);
 		});
 
-		it('should average a value from an object', function() {
+		it('should average a value from an object', () => {
 			var data = [
 				{ value: 1 },
 				{ value: 2 },
@@ -782,8 +782,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.append()', function() {
-		it('should append an array', function() {
+	describe('.append()', () => {
+		it('should append an array', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -793,7 +793,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 
-		it('should append another Aggregator', function() {
+		it('should append another Aggregator', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -803,7 +803,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3, 4, 5, 6]);
 		});
 
-		it('should append multiple elements', function() {
+		it('should append multiple elements', () => {
 			var aggregator = new Aggregator([1, 2]);
 
 			var result = aggregator
@@ -817,8 +817,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.removeDuplicates()', function() {
-		it('should remove duplicates from flat list', function() {
+	describe('.removeDuplicates()', () => {
+		it('should remove duplicates from flat list', () => {
 			var data = [1, 2, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -826,7 +826,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3]);
 		});
 
-		it('it should remove duplicate keys from a list', function() {
+		it('it should remove duplicate keys from a list', () => {
 			var data = [
 				{ id: 1, value: 'a' },
 				{ id: 2, value: 'b' },
@@ -844,7 +844,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('it should remove duplicate combinations from a list', function() {
+		it('it should remove duplicate combinations from a list', () => {
 			var data = [
 				{ a: 1, b: 5 },
 				{ a: 2, b: 4 },
@@ -864,9 +864,9 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.getCommonElements()', function() {
-		describe('from object', function() {
-			it('should get common elements from a flat list', function() {
+	describe('.getCommonElements()', () => {
+		describe('from object', () => {
+			it('should get common elements from a flat list', () => {
 				var aggregator1 = new Aggregator([1, 2, 3]);
 				var aggregator2 = new Aggregator([2, 3, 4]);
 
@@ -874,7 +874,7 @@ describe('Aggregator', function() {
 					.toEqual([2, 3]);
 			});
 
-			it('should get common elements by a key', function() {
+			it('should get common elements by a key', () => {
 				var aggregator1 = new Aggregator([
 					{ id: 1, value: 'a' },
 					{ id: 2, value: 'b' },
@@ -894,7 +894,7 @@ describe('Aggregator', function() {
 					]);
 			});
 
-			it('should get common combination elements', function() {
+			it('should get common combination elements', () => {
 				var aggregator1 = new Aggregator([
 					{ a: 1, b: 2 },
 					{ a: 2, b: 2 },
@@ -919,8 +919,8 @@ describe('Aggregator', function() {
 			});
 		});
 
-		describe('from constructor', function() {
-			it('should get common elements from flat lists', function() {
+		describe('from constructor', () => {
+			it('should get common elements from flat lists', () => {
 				var aggregator1 = new Aggregator([1, 2, 3]);
 				var aggregator2 = new Aggregator([2, 3, 4]);
 
@@ -928,7 +928,7 @@ describe('Aggregator', function() {
 					.toEqual([2, 3]);
 			});
 
-			it('should get common keys from lists', function() {
+			it('should get common keys from lists', () => {
 				var aggregator1 = new Aggregator([
 					{ id: 1, value: 'a' },
 					{ id: 2, value: 'b' },
@@ -950,8 +950,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.group()', function() {
-		it('should group by a field', function() {
+	describe('.group()', () => {
+		it('should group by a field', () => {
 			var data = [
 				{ gender: 'M', name: 'Adam' },
 				{ gender: 'M', name: 'Beat' },
@@ -979,7 +979,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should group by a function', function() {
+		it('should group by a function', () => {
 			var data = [
 				{ gender: 'M', name: 'Adam' },
 				{ gender: 'M', name: 'Beat' },
@@ -1007,7 +1007,7 @@ describe('Aggregator', function() {
 				]);
 		});
 
-		it('should produce deep groups for multiple keys', function() {
+		it('should produce deep groups for multiple keys', () => {
 			var data = [
 				{ gender: 'M', age: 17, name: 'Adam' },
 				{ gender: 'M', age: 23, name: 'Beat' },
@@ -1063,8 +1063,8 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.toArray()', function() {
-		it('should return the data as an array', function() {
+	describe('.toArray()', () => {
+		it('should return the data as an array', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -1072,7 +1072,7 @@ describe('Aggregator', function() {
 				.toEqual([1, 2, 3]);
 		});
 
-		it('should not return the original array', function() {
+		it('should not return the original array', () => {
 			var data = [1, 2, 3];
 			var aggregator = new Aggregator(data);
 
@@ -1087,14 +1087,14 @@ describe('Aggregator', function() {
 		});
 	});
 
-	describe('.toMap()', function() {
+	describe('.toMap()', () => {
 		var data = [
 			{ id: 1, value: 'a' },
 			{ id: 2, value: 'b' },
 			{ id: 3, value: 'c' }
 		];
 
-		it('should return a map from a string key', function() {
+		it('should return a map from a string key', () => {
 			var aggregator = new Aggregator(data);
 
 			expect(aggregator.toMap('id'))
@@ -1105,7 +1105,7 @@ describe('Aggregator', function() {
 				});
 		});
 
-		it('sould return a map from a function key', function() {
+		it('sould return a map from a function key', () => {
 			var aggregator = new Aggregator(data);
 
 			var key = function(elem) {
@@ -1120,7 +1120,7 @@ describe('Aggregator', function() {
 				});
 		});
 
-		it('should not overwrite an existing duplicate', function() {
+		it('should not overwrite an existing duplicate', () => {
 			var data2 = [
 				{ name: 'A', age: 28 },
 				{ name: 'B', age: 29 },

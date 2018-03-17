@@ -13,16 +13,16 @@
 	all
 	one
 */
-describe('matchers', function() {
-	describe('eq()', function() {
-		it('should return elements equal to the reference', function() {
+describe('matchers', () => {
+	describe('eq()', () => {
+		it('should return elements equal to the reference', () => {
 			var result = [1, 2, 3].filter(eq(2));
 
 			expect(result)
 				.toEqual([2]);
 		});
 
-		it('should return values equal to the reference', function() {
+		it('should return values equal to the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -33,7 +33,7 @@ describe('matchers', function() {
 				.toEqual([{ value: 2 }]);
 		});
 
-		it('should return mapped values equal to the reference', function() {
+		it('should return mapped values equal to the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -51,15 +51,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('neq()', function() {
-		it('should return elements not equal to the reference', function() {
+	describe('neq()', () => {
+		it('should return elements not equal to the reference', () => {
 			var result = [1, 2, 3].filter(neq(2));
 
 			expect(result)
 				.toEqual([1, 3]);
 		});
 
-		it('should return values not equal to the reference', function() {
+		it('should return values not equal to the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -73,7 +73,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return mapped values not equal to the reference', function() {
+		it('should return mapped values not equal to the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -92,15 +92,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('gt()', function() {
-		it('should return elements greater than the reference', function() {
+	describe('gt()', () => {
+		it('should return elements greater than the reference', () => {
 			var result = [1, 2, 3].filter(gt(2));
 
 			expect(result)
 				.toEqual([3]);
 		});
 
-		it('should return values greater than the reference', function() {
+		it('should return values greater than the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -113,7 +113,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return mapped values greater than the reference', function() {
+		it('should return mapped values greater than the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -131,15 +131,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('lt()', function() {
-		it('should return elements less than the reference', function() {
+	describe('lt()', () => {
+		it('should return elements less than the reference', () => {
 			var result = [1, 2, 3].filter(lt(2));
 
 			expect(result)
 				.toEqual([1]);
 		});
 
-		it('should return values less than the reference', function() {
+		it('should return values less than the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -152,7 +152,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return mapped values less than the reference', function() {
+		it('should return mapped values less than the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -170,15 +170,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('gte()', function() {
-		it('should return elements greater than or equal to the reference', function() {
+	describe('gte()', () => {
+		it('should return elements greater than or equal to the reference', () => {
 			var result = [1, 2, 3].filter(gte(2));
 
 			expect(result)
 				.toEqual([2, 3]);
 		});
 
-		it('should return values greater than or equal to the reference', function() {
+		it('should return values greater than or equal to the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -192,7 +192,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return mapped values greater than or equal to the reference', function() {
+		it('should return mapped values greater than or equal to the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -211,15 +211,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('lte()', function() {
-		it('should return elements less than or equal to the reference', function() {
+	describe('lte()', () => {
+		it('should return elements less than or equal to the reference', () => {
 			var result = [1, 2, 3].filter(lte(2));
 
 			expect(result)
 				.toEqual([1, 2]);
 		});
 
-		it('should return values less than or equal to the reference', function() {
+		it('should return values less than or equal to the reference', () => {
 			var result = [
 				{ value: 1 },
 				{ value: 2 },
@@ -233,7 +233,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return mapped values less than or equal to the reference', function() {
+		it('should return mapped values less than or equal to the reference', () => {
 			var map = function(elem) {
 				return elem.a + elem.b;
 			};
@@ -252,15 +252,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('isNull()', function() {
-		it('should return elements that are defined as null', function() {
+	describe('isNull()', () => {
+		it('should return elements that are defined as null', () => {
 			var result = [1, undefined, null, '', 0].filter(isNull());
 
 			expect(result)
 				.toEqual([undefined, null]);
 		});
 
-		it('should return values that are defined as null', function() {
+		it('should return values that are defined as null', () => {
 			var result = [
 				{ value: 1 },
 				{ value: undefined },
@@ -276,7 +276,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should return elements where a mapped value is defined as null', function() {
+		it('should return elements where a mapped value is defined as null', () => {
 			var map = function(elem) {
 				return elem.value;
 			};
@@ -297,8 +297,8 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('not()', function() {
-		it('should return elements that are not defined as null', function() {
+	describe('not()', () => {
+		it('should return elements that are not defined as null', () => {
 			var result = [1, undefined, null, '', 0].filter(not(isNull()));
 
 			expect(result)
@@ -306,15 +306,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('and()', function() {
-		it('should return results that match both conditions', function() {
+	describe('and()', () => {
+		it('should return results that match both conditions', () => {
 			var result = [1, 2, 3].filter(and(gt(1), gt(2)));
 
 			expect(result)
 				.toEqual([3]);
 		});
 
-		it('should return results that match a set of conditions', function() {
+		it('should return results that match a set of conditions', () => {
 			var match = function(value) {
 				return value % 2 === 0;
 			};
@@ -335,7 +335,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should allow multiple conditions', function() {
+		it('should allow multiple conditions', () => {
 			var match1 = function(value) {
 				return value % 2 === 0;
 			};
@@ -355,7 +355,7 @@ describe('matchers', function() {
 				.toEqual([12]);
 		});
 
-		it('should stop at the first false result', function() {
+		it('should stop at the first false result', () => {
 			var match1 = jasmine.createSpy('match1')
 				.and.returnValue(false);
 
@@ -370,15 +370,15 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('or()', function() {
-		it('should return results matching either condition', function() {
+	describe('or()', () => {
+		it('should return results matching either condition', () => {
 			var result = [1, 2, 3].filter(or(lt(2), gt(2)));
 
 			expect(result)
 				.toEqual([1, 3]);
 		});
 
-		it('should return results that match on of a set of conditions', function() {
+		it('should return results that match on of a set of conditions', () => {
 			var match = function(value) {
 				return value % 2 === 0;
 			};
@@ -399,7 +399,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should allow multiple conditions', function() {
+		it('should allow multiple conditions', () => {
 			var match1 = function(value) {
 				return value % 2 === 0;
 			};
@@ -419,7 +419,7 @@ describe('matchers', function() {
 				.toEqual([2, 3, 4, 6, 8, 9, 10, 11, 12]);
 		});
 
-		it('should stop at the first true result', function() {
+		it('should stop at the first true result', () => {
 			var match1 = jasmine.createSpy('match1')
 				.and.returnValue(true);
 
@@ -434,7 +434,7 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('all()', function() {
+	describe('all()', () => {
 		var data = [
 			{ a: 2, b: 4 },
 			{ a: 1, b: 2 },
@@ -453,7 +453,7 @@ describe('matchers', function() {
 			}
 		];
 
-		it('should filter aggregator elements where all values match', function() {
+		it('should filter aggregator elements where all values match', () => {
 			var aggregator = new Aggregator(data);
 
 			expect(aggregator.where(keys, all(match)).toArray())
@@ -462,7 +462,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should filter elements where all values match', function() {
+		it('should filter elements where all values match', () => {
 			var result = data.filter(all(keys, match));
 
 			expect(result)
@@ -472,7 +472,7 @@ describe('matchers', function() {
 		});
 	});
 
-	describe('one()', function() {
+	describe('one()', () => {
 		var data = [
 			{ a: 2, b: 4 },
 			{ a: 1, b: 2 },
@@ -491,7 +491,7 @@ describe('matchers', function() {
 			}
 		];
 
-		it('should filter aggregator elements where at least one value matches', function() {
+		it('should filter aggregator elements where at least one value matches', () => {
 			var aggregator = new Aggregator(data);
 
 			expect(aggregator.where(keys, one(match)).toArray())
@@ -502,7 +502,7 @@ describe('matchers', function() {
 				]);
 		});
 
-		it('should filter elements where at least one value matches', function() {
+		it('should filter elements where at least one value matches', () => {
 			var result = data.filter(one(keys, match));
 
 			expect(result)

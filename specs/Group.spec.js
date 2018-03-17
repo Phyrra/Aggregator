@@ -1,7 +1,7 @@
 /* global
 	Group
 */
-describe('Group', function() {
+describe('Group', () => {
 	var obj = {
 		'a': [1, 2, 3],
 		'b': [4, 5, 6]
@@ -9,19 +9,19 @@ describe('Group', function() {
 
 	var group = new Group(obj);
 
-	it('should be a group', function() {
+	it('should be a group', () => {
 		expect(group.constructor).toBe(Group);
 	});
 
-	describe('.keys()', function() {
-		it('should return the keys', function() {
+	describe('.keys()', () => {
+		it('should return the keys', () => {
 			expect(group.keys().toArray())
 				.toEqual(['a', 'b']);
 		});
 	});
 
-	describe('.values()', function() {
-		it('should return the values', function() {
+	describe('.values()', () => {
+		it('should return the values', () => {
 			expect(group.values().toArray())
 				.toEqual([
 					[1, 2, 3],
@@ -30,8 +30,8 @@ describe('Group', function() {
 		});
 	});
 
-	describe('.get()', function() {
-		it('should add a key-value pair', function() {
+	describe('.get()', () => {
+		it('should add a key-value pair', () => {
 			var group = new Group({});
 			group.set('a', [1, 2, 3]);
 
@@ -40,15 +40,15 @@ describe('Group', function() {
 		});
 	});
 
-	describe('.set()', function() {
-		it('should get a specific value', function() {
+	describe('.set()', () => {
+		it('should get a specific value', () => {
 			expect(group.get('a'))
 				.toEqual([1, 2, 3]);
 		});
 	});
 
-	describe('.toArray()', function() {
-		it('should turn the group into an array with key and items', function() {
+	describe('.toArray()', () => {
+		it('should turn the group into an array with key and items', () => {
 			expect(group.toArray())
 				.toEqual([
 					{
@@ -62,8 +62,8 @@ describe('Group', function() {
 		});
 	});
 
-	describe('.toMap()', function() {
-		it('should turn the group into a map', function() {
+	describe('.toMap()', () => {
+		it('should turn the group into a map', () => {
 			expect(group.toMap())
 				.toEqual({
 					'a': [1, 2, 3],
@@ -71,7 +71,7 @@ describe('Group', function() {
 				});
 		});
 
-		it('should not return the origina data', function() {
+		it('should not return the origina data', () => {
 			var obj = {
 				'a': [1, 2, 3],
 				'b': [4, 5, 6]
@@ -90,8 +90,8 @@ describe('Group', function() {
 		});
 	});
 
-	describe('.toAggregator()', function() {
-		it('should turn the group into an Aggregator with key and items', function() {
+	describe('.toAggregator()', () => {
+		it('should turn the group into an Aggregator with key and items', () => {
 			expect(group.toAggregator().toArray())
 				.toEqual([
 					{
