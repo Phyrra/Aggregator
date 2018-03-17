@@ -713,6 +713,15 @@ describe('Aggregator', function() {
 		});
 	});
 
+	describe('.size()', function() {
+		it('should return the size of the Aggregator', () => {
+			var data = [1, 2, 3];
+			var aggregator = new Aggregator(data);
+
+			expect(aggregator.size()).toBe(3);
+		});
+	});
+
 	describe('.sum()', function() {
 		it('should sum up flat list', function() {
 			var data = [1, 2, 3];
@@ -940,7 +949,7 @@ describe('Aggregator', function() {
 
 			var group = aggregator.group('gender');
 
-			expect(group.keys())
+			expect(group.keys().toArray())
 				.toEqual(['M', 'F']);
 
 			expect(group.get('F').toArray())
@@ -968,7 +977,7 @@ describe('Aggregator', function() {
 
 			var group = aggregator.group('gender');
 
-			expect(group.keys())
+			expect(group.keys().toArray())
 				.toEqual(['M', 'F']);
 
 			expect(group.get('F').toArray())

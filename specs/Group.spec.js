@@ -15,14 +15,14 @@ describe('Group', function() {
 
 	describe('.keys()', function() {
 		it('should return the keys', function() {
-			expect(group.keys())
+			expect(group.keys().toArray())
 				.toEqual(['a', 'b']);
 		});
 	});
 
 	describe('.values()', function() {
 		it('should return the values', function() {
-			expect(group.values())
+			expect(group.values().toArray())
 				.toEqual([
 					[1, 2, 3],
 					[4, 5, 6]
@@ -34,7 +34,7 @@ describe('Group', function() {
 		it('should add a key-value pair', function() {
 			var group = new Group({});
 			group.set('a', [1, 2, 3]);
-		
+
 			expect(group.get('a'))
 				.toEqual([1, 2, 3]);
 		});
@@ -85,7 +85,7 @@ describe('Group', function() {
 
 			obj['c'] = [7, 8, 9];
 
-			expect(group.keys().length).toBe(3);
+			expect(group.keys().size()).toBe(3);
 			expect(Object.keys(map).length).toBe(2);
 		});
 	});
