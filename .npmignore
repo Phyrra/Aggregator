@@ -1,0 +1,8 @@
+coverage/
+specs/
+test/
+karma.conf.js
+tsconfig.json
+yarn-error.log
+index.html
+browser.js
