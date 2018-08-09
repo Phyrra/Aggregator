@@ -11,7 +11,7 @@
 	"license": "MIT",
 	"private": false,
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc && browserify browser.js > dist/masa-aggregator.browser.js",
 		"test": "karma start karma.conf.js"
 	},
 	"main": "index.js",
@@ -20,6 +20,7 @@
 	"devDependencies": {
 		"@types/jasmine": "^2.8.6",
 		"@types/node": "^9.6.5",
+		"browserify": "^16.2.2",
 		"jasmine-core": "^3.1.0",
 		"karma": "^2.0.0",
 		"karma-chrome-launcher": "^2.2.0",

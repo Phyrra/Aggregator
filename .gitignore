@@ -3,3 +3,4 @@ examples/
 dist/
 coverage/
 yarn-error.log
+index.html
