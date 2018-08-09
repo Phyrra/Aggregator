@@ -1,15 +1,15 @@
 Installation
 ============
 
-The module is registered on bower, to install run
+The module is registered on npm, to install run
 ```
-bower --save install sama-aggregator
+yarn add sama-aggregator
 ```
+
+Since the library is written in Typescript, it comes with its own types.
 
 Usage
 =====
-
-The `Aggregator` is registered on the `window` object for global access.
 
 For full documentation, please refer to https://aggregator.000webhostapp.com/
 
