@@ -1,0 +1,30 @@
+{
+	"name": "masa-aggregator",
+	"version": "0.1.0",
+	"description": "Data Aggregator library",
+	"keywords": [
+		"data",
+		"aggregation"
+	],
+	"repository": "TODO",
+	"author": "Sandro.Maggi",
+	"license": "MIT",
+	"private": false,
+	"scripts": {
+		"build": "tsc",
+		"test": "karma start karma.conf.js"
+	},
+	"main": "index.js",
+	"types": "index.d.ts",
+	"readme": "README.md",
+	"devDependencies": {
+		"@types/jasmine": "^2.8.6",
+		"@types/node": "^9.6.5",
+		"jasmine-core": "^3.1.0",
+		"karma": "^2.0.0",
+		"karma-chrome-launcher": "^2.2.0",
+		"karma-jasmine": "^1.1.1",
+		"karma-typescript": "^3.0.12",
+		"typescript": "^2.8.1"
+	}
+}

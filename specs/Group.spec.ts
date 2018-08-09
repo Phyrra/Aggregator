@@ -1,13 +1,12 @@
-/* global
-	Group
-*/
+import { Group } from '../src/Group';
+
 describe('Group', () => {
-	var obj = {
+	const obj: any = {
 		'a': [1, 2, 3],
 		'b': [4, 5, 6]
 	};
 
-	var group = new Group(obj);
+	const group: Group = new Group(obj);
 
 	it('should be a group', () => {
 		expect(group.constructor).toBe(Group);
@@ -32,10 +31,10 @@ describe('Group', () => {
 
 	describe('.get()', () => {
 		it('should add a key-value pair', () => {
-			var group = new Group({});
-			group.set('a', [1, 2, 3]);
+			const grp: Group = new Group({});
+			grp.set('a', [1, 2, 3]);
 
-			expect(group.get('a'))
+			expect(grp.get('a'))
 				.toEqual([1, 2, 3]);
 		});
 	});
@@ -72,20 +71,20 @@ describe('Group', () => {
 		});
 
 		it('should not return the origina data', () => {
-			var obj = {
+			const obj: any = {
 				'a': [1, 2, 3],
 				'b': [4, 5, 6]
 			};
 
-			var group = new Group(obj);
+			const grp: Group = new Group(obj);
 
-			var map = group.toMap();
+			const map: any = group.toMap();
 
 			expect(map).not.toBe(obj);
 
 			obj['c'] = [7, 8, 9];
 
-			expect(group.keys().size()).toBe(3);
+			expect(grp.keys().count()).toBe(3);
 			expect(Object.keys(map).length).toBe(2);
 		});
 	});

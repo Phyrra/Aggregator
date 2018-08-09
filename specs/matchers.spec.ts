@@ -1,29 +1,20 @@
-/* global
-	Aggregator
-	eq
-	neq
-	gt
-	lt
-	gte
-	lte
-	isNull
-	not
-	and
-	or
-	all
-	one
-*/
+import { eq, neq, gt, lt, gte, lte, isNull, not, and, or, all, one } from '../src/matchers';
+import { Aggregator } from '../src/Aggregator';
+
 describe('matchers', () => {
+	const addMap: Function = (elem) => elem.a + elem.b;
+	const valMap: Function = (elem) => elem.value;
+
 	describe('eq()', () => {
 		it('should return elements equal to the reference', () => {
-			var result = [1, 2, 3].filter(eq(2));
+			const result: number[] = [1, 2, 3].filter(eq(2));
 
 			expect(result)
 				.toEqual([2]);
 		});
 
 		it('should return values equal to the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -34,15 +25,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values equal to the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(eq(map, 4));
+			].filter(eq(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -53,14 +40,14 @@ describe('matchers', () => {
 
 	describe('neq()', () => {
 		it('should return elements not equal to the reference', () => {
-			var result = [1, 2, 3].filter(neq(2));
+			const result: number[] = [1, 2, 3].filter(neq(2));
 
 			expect(result)
 				.toEqual([1, 3]);
 		});
 
 		it('should return values not equal to the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -74,15 +61,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values not equal to the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(neq(map, 4));
+			].filter(neq(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -94,14 +77,14 @@ describe('matchers', () => {
 
 	describe('gt()', () => {
 		it('should return elements greater than the reference', () => {
-			var result = [1, 2, 3].filter(gt(2));
+			const result: number[] = [1, 2, 3].filter(gt(2));
 
 			expect(result)
 				.toEqual([3]);
 		});
 
 		it('should return values greater than the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -114,15 +97,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values greater than the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(gt(map, 4));
+			].filter(gt(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -133,14 +112,14 @@ describe('matchers', () => {
 
 	describe('lt()', () => {
 		it('should return elements less than the reference', () => {
-			var result = [1, 2, 3].filter(lt(2));
+			const result: number[] = [1, 2, 3].filter(lt(2));
 
 			expect(result)
 				.toEqual([1]);
 		});
 
 		it('should return values less than the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -153,15 +132,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values less than the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(lt(map, 4));
+			].filter(lt(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -172,14 +147,14 @@ describe('matchers', () => {
 
 	describe('gte()', () => {
 		it('should return elements greater than or equal to the reference', () => {
-			var result = [1, 2, 3].filter(gte(2));
+			const result: number[] = [1, 2, 3].filter(gte(2));
 
 			expect(result)
 				.toEqual([2, 3]);
 		});
 
 		it('should return values greater than or equal to the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -193,15 +168,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values greater than or equal to the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(gte(map, 4));
+			].filter(gte(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -213,14 +184,14 @@ describe('matchers', () => {
 
 	describe('lte()', () => {
 		it('should return elements less than or equal to the reference', () => {
-			var result = [1, 2, 3].filter(lte(2));
+			const result: number[] = [1, 2, 3].filter(lte(2));
 
 			expect(result)
 				.toEqual([1, 2]);
 		});
 
 		it('should return values less than or equal to the reference', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: 2 },
 				{ value: 3 }
@@ -234,15 +205,11 @@ describe('matchers', () => {
 		});
 
 		it('should return mapped values less than or equal to the reference', () => {
-			var map = function(elem) {
-				return elem.a + elem.b;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1 },
 				{ a: 2, b: 2 },
 				{ a: 3, b: 3 }
-			].filter(lte(map, 4));
+			].filter(lte(addMap, 4));
 
 			expect(result)
 				.toEqual([
@@ -254,14 +221,14 @@ describe('matchers', () => {
 
 	describe('isNull()', () => {
 		it('should return elements that are defined as null', () => {
-			var result = [1, undefined, null, '', 0].filter(isNull());
+			const result: any[] = [1, undefined, null, '', 0].filter(isNull());
 
 			expect(result)
 				.toEqual([undefined, null]);
 		});
 
 		it('should return values that are defined as null', () => {
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: undefined },
 				{ value: null },
@@ -277,17 +244,13 @@ describe('matchers', () => {
 		});
 
 		it('should return elements where a mapped value is defined as null', () => {
-			var map = function(elem) {
-				return elem.value;
-			};
-
-			var result = [
+			const result: any[] = [
 				{ value: 1 },
 				{ value: undefined },
 				{ value: null },
 				{ value: '' },
 				{ value: 0 }
-			].filter(isNull(map));
+			].filter(isNull(valMap));
 
 			expect(result)
 				.toEqual([
@@ -299,7 +262,7 @@ describe('matchers', () => {
 
 	describe('not()', () => {
 		it('should return elements that are not defined as null', () => {
-			var result = [1, undefined, null, '', 0].filter(not(isNull()));
+			const result: any[] = [1, undefined, null, '', 0].filter(not(isNull()));
 
 			expect(result)
 				.toEqual([1, '', 0]);
@@ -308,18 +271,16 @@ describe('matchers', () => {
 
 	describe('and()', () => {
 		it('should return results that match both conditions', () => {
-			var result = [1, 2, 3].filter(and(gt(1), gt(2)));
+			const result: number[] = [1, 2, 3].filter(and(gt(1), gt(2)));
 
 			expect(result)
 				.toEqual([3]);
 		});
 
 		it('should return results that match a set of conditions', () => {
-			var match = function(value) {
-				return value % 2 === 0;
-			};
+			const match: Function = (value) => value % 2 === 0;
 
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 2, c: 2 },
 				{ a: 2, b: 1, c: 2 },
 				{ a: 2, b: 2, c: 1 },
@@ -336,19 +297,11 @@ describe('matchers', () => {
 		});
 
 		it('should allow multiple conditions', () => {
-			var match1 = function(value) {
-				return value % 2 === 0;
-			};
+			const match1: Function = (value) => value % 2 === 0;
+			const match2: Function = (value) => value % 3 === 0;
+			const match3: Function = (value) => value > 10;
 
-			var match2 = function(value) {
-				return value % 3 === 0;
-			};
-
-			var match3 = function(value) {
-				return value > 10;
-			};
-
-			var result = [2, 4, 6, 8, 10, 12]
+			const result: number[] = [2, 4, 6, 8, 10, 12]
 				.filter(and(match1, match2, match3));
 
 			expect(result)
@@ -356,10 +309,10 @@ describe('matchers', () => {
 		});
 
 		it('should stop at the first false result', () => {
-			var match1 = jasmine.createSpy('match1')
+			const match1 = jasmine.createSpy('match1')
 				.and.returnValue(false);
 
-			var match2 = jasmine.createSpy('match2')
+			const match2 = jasmine.createSpy('match2')
 				.and.returnValue(true);
 
 			[1, 2, 3]
@@ -372,18 +325,16 @@ describe('matchers', () => {
 
 	describe('or()', () => {
 		it('should return results matching either condition', () => {
-			var result = [1, 2, 3].filter(or(lt(2), gt(2)));
+			const result: number[] = [1, 2, 3].filter(or(lt(2), gt(2)));
 
 			expect(result)
 				.toEqual([1, 3]);
 		});
 
 		it('should return results that match on of a set of conditions', () => {
-			var match = function(value) {
-				return value % 2 === 0;
-			};
+			const match: Function = (value) => value % 2 === 0;
 
-			var result = [
+			const result: any[] = [
 				{ a: 1, b: 1, c: 1 },
 				{ a: 2, b: 2, c: 1 },
 				{ a: 1, b: 1, c: 2 }
@@ -400,19 +351,11 @@ describe('matchers', () => {
 		});
 
 		it('should allow multiple conditions', () => {
-			var match1 = function(value) {
-				return value % 2 === 0;
-			};
+			const match1: Function = (value) => value % 2 === 0;
+			const match2: Function = (value) => value % 3 === 0;
+			const match3: Function = (value) => value > 10;
 
-			var match2 = function(value) {
-				return value % 3 === 0;
-			};
-
-			var match3 = function(value) {
-				return value > 10;
-			};
-
-			var result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+			const result: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 				.filter(or(match1, match2, match3));
 
 			expect(result)
@@ -435,26 +378,22 @@ describe('matchers', () => {
 	});
 
 	describe('all()', () => {
-		var data = [
+		const data: any[] = [
 			{ a: 2, b: 4 },
 			{ a: 1, b: 2 },
 			{ a: 2, b: 1 },
 			{ a: 1, b: 3 }
 		];
 
-		var match = function(value) {
-			return value % 2 === 0;
-		};
+		const match: Function = (value) => value % 2 === 0;
 
-		var keys = [
+		const keys: (Function | string)[] = [
 			'a',
-			function(elem) {
-				return elem.b;
-			}
+			(elem) => elem.b
 		];
 
 		it('should filter aggregator elements where all values match', () => {
-			var aggregator = new Aggregator(data);
+			const aggregator: Aggregator = new Aggregator(data);
 
 			expect(aggregator.where(keys, all(match)).toArray())
 				.toEqual([
@@ -463,7 +402,7 @@ describe('matchers', () => {
 		});
 
 		it('should filter elements where all values match', () => {
-			var result = data.filter(all(keys, match));
+			const result: any[] = data.filter(all(keys, match));
 
 			expect(result)
 				.toEqual([
@@ -473,26 +412,22 @@ describe('matchers', () => {
 	});
 
 	describe('one()', () => {
-		var data = [
+		const data: any[] = [
 			{ a: 2, b: 4 },
 			{ a: 1, b: 2 },
 			{ a: 2, b: 1 },
 			{ a: 1, b: 3 }
 		];
 
-		var match = function(value) {
-			return value % 2 === 0;
-		};
+		const match: Function = (value) => value % 2 === 0;
 
-		var keys = [
+		const keys: (Function | string)[] = [
 			'a',
-			function(elem) {
-				return elem.b;
-			}
+			(elem) => elem.b
 		];
 
 		it('should filter aggregator elements where at least one value matches', () => {
-			var aggregator = new Aggregator(data);
+			const aggregator: Aggregator = new Aggregator(data);
 
 			expect(aggregator.where(keys, one(match)).toArray())
 				.toEqual([
@@ -503,7 +438,7 @@ describe('matchers', () => {
 		});
 
 		it('should filter elements where at least one value matches', () => {
-			var result = data.filter(one(keys, match));
+			const result: any[] = data.filter(one(keys, match));
 
 			expect(result)
 				.toEqual([
