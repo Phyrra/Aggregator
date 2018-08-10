@@ -409,6 +409,16 @@ describe('matchers', () => {
 					{ a: 2, b: 4 }
 				]);
 		});
+
+		it('should work with one matcher', () => {
+			const result: any[] = data.filter(all('a', match));
+
+			expect(result)
+				.toEqual([
+					{ a: 2, b: 4 },
+					{ a: 2, b: 1 }
+				]);
+		});
 	});
 
 	describe('one()', () => {
@@ -444,6 +454,16 @@ describe('matchers', () => {
 				.toEqual([
 					{ a: 2, b: 4 },
 					{ a: 1, b: 2 },
+					{ a: 2, b: 1 }
+				]);
+		});
+
+		it('should work with one matcher', () => {
+			const result: any[] = data.filter(all('a', match));
+
+			expect(result)
+				.toEqual([
+					{ a: 2, b: 4 },
 					{ a: 2, b: 1 }
 				]);
 		});
