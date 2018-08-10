@@ -1,6 +1,6 @@
 const { Aggregator } = require('./dist/Aggregator');
 const { Group } = require('./dist/Group');
-const { eq, neq, gt, lt, gte, lte, isNull, not, and, or, all, one } = require('./dist/matchers');
+const { eq, neq, gt, lt, gte, lte, isNull, not, and, or, all, one, match } = require('./dist/matchers');
 
 module.exports = {
 	Aggregator,
@@ -16,5 +16,6 @@ module.exports = {
 	and,
 	or,
 	all,
-	one
+	one,
+	match
 };

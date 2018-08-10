@@ -1,3 +1,5 @@
+export type KeyExtractor = Function |  string;
+
 export function getShallowValue(obj: any, key: string, fallback?: any): any {
 	var idx1: number = key.indexOf('[');
 
@@ -48,7 +50,7 @@ export function getDeepValue(obj: any, deepKey: string, fallback?: any): any {
 	}, obj) || fallback;
 }
 
-export function extractValue(elem: any, extractor: Function | string | undefined, idx?: number): any {
+export function extractValue(elem: any, extractor?: KeyExtractor, idx?: number): any {
 	switch (typeof extractor) {
 		case 'function':
 			return (extractor as Function)(elem, idx);

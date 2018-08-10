@@ -1,21 +1,19 @@
-import { extractValue, evalCondition } from './helpers';
-import { Aggregator } from './Aggregator';
+import { extractValue, evalCondition, KeyExtractor } from './helpers';
+import { FuzzyMatcher } from './fuzzy-matcher';
 
 const keyMatcher: Function = (inner: Function, args: any[]) => {
-	let key: Function | string | undefined;
+	let keyExtractor: KeyExtractor | undefined;
 
 	if (args.length > 0) {
-		key = args[0];
+		keyExtractor = args[0];
 	}
 
 	return (value: any) =>
-		inner(
-			key ? extractValue(value, key) : value
-		);
+		inner(extractValue(value, keyExtractor));
 }
 
 const keyValueMatcher: Function = (inner: Function, args: any) => {
-	let key: Function | string | undefined;
+	let key: KeyExtractor | undefined;
 	let reference: any;
 
 	if (args.length > 1) {
@@ -27,29 +25,30 @@ const keyValueMatcher: Function = (inner: Function, args: any) => {
 
 	return (value: any) =>
 		inner(
-			key ? extractValue(value, key) : value,
+			extractValue(value, key),
 			reference
 		);
 }
 
 const multiKeyValueMatcher: Function = (inner: Function, args: any) => {
-	let keys: any;
+	let keyExtractors: KeyExtractor[] | undefined;
 	let reference: any;
 
 	if (args.length > 1) {
-		keys = args[0];
-		reference = args[1];
-
-		if (!Array.isArray(keys)) {
-			keys = [keys];
+		if (Array.isArray(args[0])) {
+			keyExtractors = args[0];
+		} else {
+			keyExtractors = [ args[0] ];
 		}
+
+		reference = args[1];
 	} else {
 		reference = args[0];
 	}
 
 	return (value: any) =>
 		inner(
-			keys ? keys.map((key: Function | string) => extractValue(value, key)) : value,
+			keyExtractors ? keyExtractors.map((keyExtractor: KeyExtractor) => extractValue(value, keyExtractor)) : value,
 			reference
 		);
 }
@@ -98,16 +97,23 @@ export function or(...args: any[]): MatcherFunction {
 
 export function all(...args: any[]): MatcherFunction {
 	return multiKeyValueMatcher((values: any[], cond: Function) =>
-		new Aggregator(values)
-			.all(cond),
+		values
+			.every((value: any, idx: number) => cond(value, idx)),
 		args
 	);
 }
 
 export function one(...args: any[]): MatcherFunction {
 	return multiKeyValueMatcher((values: any[], cond: Function) =>
-		new Aggregator(values)
-			.has(cond),
+		values
+			.some((value: any, idx: number) => cond(value, idx)),
 		args
 	);
+}
+
+export function match(...args: any[]): MatcherFunction {
+	const fuzzyMatcher = new FuzzyMatcher();
+	const fuzzyLimit = fuzzyMatcher.getConfig('fuzzyLimit');
+
+	return keyValueMatcher((value: any, reference: any) => value && fuzzyMatcher.getFuzzyResult(reference, value).match >= fuzzyLimit, args);
 }

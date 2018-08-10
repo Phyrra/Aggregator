@@ -1,10 +1,9 @@
-/* global
-	Aggregator
-	match
-*/
+import {  match } from '../src/matchers';
+import { Aggregator } from '../src/Aggregator';
+
 describe('fuzzy matcher', () => {
 	it('should not find a result if there is no match', () => {
-		var result = new Aggregator(['this is a test case'])
+		const result: string[] = new Aggregator(['this is a test case'])
 			.where(match('foo'))
 			.toArray();
 
@@ -13,7 +12,7 @@ describe('fuzzy matcher', () => {
 	});
 
 	it('should find a complete substring in the term', () => {
-		var result = new Aggregator(['this is a test case'])
+		const result: string[] = new Aggregator(['this is a test case'])
 			.where(match('est'))
 			.toArray();
 
@@ -24,7 +23,7 @@ describe('fuzzy matcher', () => {
 	});
 
 	it('should find one of the words in the term', () => {
-		var result = new Aggregator([
+		const result: string[] = new Aggregator([
 			'this is a test case',
 			'this is another case'
 		])
@@ -39,7 +38,7 @@ describe('fuzzy matcher', () => {
 	});
 
 	it('should find a fuzzy match in the term', () => {
-		var result = new Aggregator(['this is a test case'])
+		const result: string[] = new Aggregator(['this is a test case'])
 			.where(match('rest'))
 			.toArray();
 
@@ -50,7 +49,7 @@ describe('fuzzy matcher', () => {
 	});
 
 	it('should not consider matches that are too short', () => {
-		var result = new Aggregator(['this is a test case'])
+		const result: string[] = new Aggregator(['this is a test case'])
 			.where(match('is a'))
 			.toArray();
 

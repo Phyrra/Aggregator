@@ -1,4 +1,4 @@
-import { evalCondition, extractValue } from './helpers';
+import { evalCondition, extractValue, KeyExtractor } from './helpers';
 import { Group } from './Group';
 
 export class Aggregator {
@@ -46,7 +46,7 @@ export class Aggregator {
 		);
 	}
 
-	private _mapData(mapper?: Function |  string): any[] {
+	private _mapData(mapper?: KeyExtractor): any[] {
 		return this._data
 			.map((elem: any, idx: number) => extractValue(elem, mapper, idx));
 	}
@@ -86,7 +86,7 @@ export class Aggregator {
 		return values.reduce(reducer, initial);
 	}
 
-	sort(...comparators: (Function | string)[]): Aggregator {
+	sort(...comparators: KeyExtractor[]): Aggregator {
 		return new Aggregator(
 			this._data.slice() // copy for decoupling
 				.sort((lhs: any, rhs: any) => {
@@ -101,7 +101,7 @@ export class Aggregator {
 					}
 
 					for (let i = 0; i < comparators.length; ++i) {
-						const comparator: Function | string = comparators[i];
+						const comparator: KeyExtractor = comparators[i];
 
 						var lhv: any = extractValue(lhs, comparator);
 						var rhv: any = extractValue(rhs, comparator);
@@ -183,7 +183,7 @@ export class Aggregator {
 		return this._data.slice();
 	}
 
-	toMap(keyExtractor?: Function | string): any {
+	toMap(keyExtractor?: KeyExtractor): any {
 		const map: any = {};
 
 		this._data
@@ -198,7 +198,7 @@ export class Aggregator {
 		return map;
 	}
 
-	removeDuplicates(keyExtractor?: Function | string): any {
+	removeDuplicates(keyExtractor?: KeyExtractor): any {
 		return this._fromMap(
 			this.toMap(keyExtractor)
 		);
@@ -207,12 +207,11 @@ export class Aggregator {
 	// TODO: How about identifying by multiple conditions?
 	// it's already (semi) possible by using a function..
 	getCommonElements(...args: any[]): Aggregator {
-		let keyExtractor: Function | string | undefined;
+		let keyExtractor: KeyExtractor | undefined;
 		let startIdx: number;
 
 		if (args[0] instanceof Aggregator) {
 			startIdx = 0;
-			keyExtractor = undefined;
 		} else {
 			startIdx = 1;
 			keyExtractor = args[0];
@@ -238,7 +237,7 @@ export class Aggregator {
 		return this._fromMap(map);
 	}
 
-	private _generateGroup(grouper: Function | string): Group {
+	private _generateGroup(grouper: KeyExtractor): Group {
 		const grouped: any = {};
 
 		this._data
@@ -263,7 +262,7 @@ export class Aggregator {
 		let iter: any[] = [];
 
 		for (let i = 0; i < args.length; ++i) {
-			let grouper: Function | string = args[i];
+			let grouper: KeyExtractor = args[i];
 
 			if (i === 0) {
 				base = this._generateGroup(grouper);

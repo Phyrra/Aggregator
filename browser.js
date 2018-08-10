@@ -1,6 +1,6 @@
 const { Aggregator } = require('./dist/Aggregator');
 const { Group } = require('./dist/Group');
-const { eq, neq, gt, lt, gte, lte, isNull, not, and, or, all, one } = require('./dist/matchers');
+const { eq, neq, gt, lt, gte, lte, isNull, not, and, or, all, one, match } = require('./dist/matchers');
 
 window.Aggregator = Aggregator;
 window.Group = Group;
@@ -16,3 +16,4 @@ window.and = and;
 window.or = or;
 window.all = all;
 window.one = one;
+window.match = match;
