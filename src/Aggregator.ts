@@ -86,42 +86,64 @@ export class Aggregator {
 		return values.reduce(reducer, initial);
 	}
 
-	sort(...comparators: KeyExtractor[]): Aggregator {
+	sort(...comparators: any[]): Aggregator {
+		const compare: (lhs: any, rhs: any) => number = (lhs, rhs) => {
+			if (lhs > rhs) {
+				return 1;
+			} else if (lhs < rhs) {
+				return -1;
+			}
+
+			return 0;
+		};
+
 		return new Aggregator(
 			this._data.slice() // copy for decoupling
 				.sort((lhs: any, rhs: any) => {
 					if (comparators.length === 0) {
-						if (lhs > rhs) {
-							return 1;
-						} else if (lhs < rhs) {
-							return -1;
-						}
-
-						return 0;
+						return compare(lhs, rhs);
 					}
 
 					for (let i = 0; i < comparators.length; ++i) {
-						const comparator: KeyExtractor = comparators[i];
+						const comparator: any = comparators[i];
 
-						var lhv: any = extractValue(lhs, comparator);
-						var rhv: any = extractValue(rhs, comparator);
+						let keyExtractor: KeyExtractor | undefined;
+						let compareFn: Function;
 
-						if (lhv > rhv) {
-							return 1;
-						} else if (lhv < rhv) {
-							return -1;
+						// [ (a, b) => {} ]
+						// [ 'val', (a, b) => {} ]
+						// [ Function, (a, b) => {} ]
+						if (Array.isArray(comparator)) {
+							// (a, b) => {}
+							if (comparator.length === 1) {
+								compareFn = comparator[0];
+
+							// [ 'val', (a, b) => {} ]
+							// [ Function, (a, b) => {} ]
+							} else {
+								keyExtractor = comparator[0];
+								compareFn = comparator[1];
+							}
+
+						// 'val'
+						// Function
+						} else {
+							keyExtractor = comparator;
+							compareFn = compare;
+						}
+
+						const result: number = compareFn(
+							extractValue(lhs, keyExtractor),
+							extractValue(rhs, keyExtractor)
+						);
+
+						if (result !== 0) {
+							return result;
 						}
 					}
 
 					return 0;
 				})
-		);
-	}
-
-	sortWith(fn: (a: any, b: any) => number): Aggregator {
-		return new Aggregator(
-			this._data.slice() // copy for decoupling
-				.sort(fn)
 		);
 	}
 
@@ -217,7 +239,7 @@ export class Aggregator {
 			keyExtractor = args[0];
 		}
 
-		let map = this.toMap(keyExtractor);
+		let map: any = this.toMap(keyExtractor);
 
 		for (let i = startIdx; i < args.length; ++i) {
 			const newMap: any = {};

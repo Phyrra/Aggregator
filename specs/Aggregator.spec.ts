@@ -508,7 +508,7 @@ describe('Aggregator', () => {
 				]);
 		});
 
-		it('shourt sort a list by multiple fields', () => {
+		it('should sort a list by multiple fields', () => {
 			const data: any[] = [
 				{ value1: 2, value2: 2 },
 				{ value1: 2, value2: 1 },
@@ -542,25 +542,53 @@ describe('Aggregator', () => {
 			expect(data)
 				.toEqual([3, 2, 1]);
 		});
-	});
 
-	describe('.sortWith()', () => {
-		const sorter: (a: any, b: any) => number = (a, b) => a - b;
+		describe('with sorting function', () => {
+			const sorter: (a: any, b: any) => number = (a, b) => a - b;
 
-		it('should use the sorting function', () => {
-			const data: number[] = [3, 2, 1];
-			const aggregator: Aggregator = new Aggregator(data);
+			it('should use the sorting function', () => {
+				const data: number[] = [3, 2, 1];
+				const aggregator: Aggregator = new Aggregator(data);
 
-			expect(aggregator.sortWith(sorter).toArray())
-				.toEqual([1, 2, 3]);
-		});
+				expect(aggregator.sort([sorter]).toArray())
+					.toEqual([1, 2, 3]);
+			});
 
-		it('should not manipulate the source', () => {
-			const data: number[] = [3, 2, 1];
-			const aggregator: Aggregator = new Aggregator(data).sortWith(sorter);
+			it('should use the sorting function on extracted values', () => {
+				const data: any[] = [
+					{ value: 3 },
+					{ value: 2 },
+					{ value: 1 }
+				];
 
-			expect(data)
-				.toEqual([3, 2, 1]);
+				const aggregator: Aggregator = new Aggregator(data);
+
+				expect(aggregator.sort(['value', sorter]).toArray())
+					.toEqual([
+						{ value: 1 },
+						{ value: 2 },
+						{ value: 3 }
+					]);
+			});
+
+			it('should allow to extractor with combine sorter', () => {
+				const data: any[] = [
+					{ value1: 2, value2: 2 },
+					{ value1: 2, value2: 1 },
+					{ value1: 1, value2: 2 },
+					{ value1: 1, value2: 1 }
+				];
+
+				const aggregator: Aggregator = new Aggregator(data);
+
+				expect(aggregator.sort('value1', ['value2', sorter]).toArray())
+					.toEqual([
+						{ value1: 1, value2: 1 },
+						{ value1: 1, value2: 2 },
+						{ value1: 2, value2: 1 },
+						{ value1: 2, value2: 2 }
+					]);
+			});
 		});
 	});
 
