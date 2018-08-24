@@ -1,12 +1,12 @@
 {
 	"name": "masa-aggregator",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "Data Aggregator library",
 	"keywords": [
 		"data",
 		"aggregation"
 	],
-	"repository": "TODO",
+	"repository": "https://github.com/Phyrra/masa-aggregator.git",
 	"author": "Sandro.Maggi",
 	"license": "MIT",
 	"private": false,
