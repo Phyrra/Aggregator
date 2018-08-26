@@ -1,4 +1,4 @@
-import { Aggregator } from '../src/Aggregator';
+import { Aggregator, SortOrder } from '../src/Aggregator';
 import { Group } from '../src/Group';
 
 describe('Aggregator', () => {
@@ -600,6 +600,30 @@ describe('Aggregator', () => {
 						{ value: 1 },
 						{ value: 2 },
 						{ value: 3 }
+					]);
+			});
+
+			it('should consider the sorting order on the sorting function on extracted values', () => {
+				const data: any[] = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				];
+
+				const aggregator: Aggregator = new Aggregator(data);
+
+				expect(aggregator.sort(['value', sorter, SortOrder.DESC]).toArray())
+					.toEqual([
+						{ value: 3 },
+						{ value: 2 },
+						{ value: 1 }
+					]);
+
+				expect(aggregator.sort([(elem: any) => elem.value, sorter, SortOrder.DESC]).toArray())
+					.toEqual([
+						{ value: 3 },
+						{ value: 2 },
+						{ value: 1 }
 					]);
 			});
 

@@ -1,6 +1,11 @@
 import { evalCondition, extractValue, KeyExtractor } from './helpers';
 import { Group } from './Group';
 
+export enum SortOrder {
+	ASC = 'asc',
+	DESC = 'desc'
+}
+
 export class Aggregator {
 	constructor(private _data: any[]) {
 		if (!Array.isArray(_data)) {
@@ -126,20 +131,28 @@ export class Aggregator {
 
 						let keyExtractor: KeyExtractor | undefined;
 						let compareFn: Function;
+						let order: number;
 
 						// [ (a, b) => {} ]
-						// [ 'val', (a, b) => {} ]
-						// [ Function, (a, b) => {} ]
+						// [ 'val' | Function, (a, b) => {} ]
+						// [ 'val' | Function, (a, b) => {}, SortOrder ]
 						if (Array.isArray(comparator)) {
 							// (a, b) => {}
 							if (comparator.length === 1) {
 								compareFn = comparator[0];
+								order = 1;
 
-							// [ 'val', (a, b) => {} ]
-							// [ Function, (a, b) => {} ]
+							// [ 'val' | Function, (a, b) => {} ]
+							} else if (comparator.length === 2) {
+								keyExtractor = comparator[0];
+								compareFn = comparator[1];
+								order = 1;
+
+							// [ 'val' | Function, (a, b) => {}, SortOrder ]
 							} else {
 								keyExtractor = comparator[0];
 								compareFn = comparator[1];
+								order = comparator[2] === SortOrder.ASC ? 1 : -1;
 							}
 
 						// 'val'
@@ -147,6 +160,7 @@ export class Aggregator {
 						} else {
 							keyExtractor = comparator;
 							compareFn = compare;
+							order = 1;
 						}
 
 						const result: number = compareFn(
@@ -155,7 +169,7 @@ export class Aggregator {
 						);
 
 						if (result !== 0) {
-							return result;
+							return result * order;
 						}
 					}
 
