@@ -226,6 +226,38 @@ describe('Aggregator', () => {
 		});
 	});
 
+	describe('.findUnique()', () => {
+		let aggregator: Aggregator;
+
+		beforeEach(() => {
+			const data: number[] = [1, 2, 3];
+			aggregator = new Aggregator(data);
+		});
+
+		it('should find a value', () => {
+			const condition: Function = (value) => value % 2 === 0;
+
+			expect(aggregator.findUnique(condition))
+				.toEqual(2);
+		});
+
+		it('should find nothing', () => {
+			const condition: Function = (value) => value > 10;
+
+			expect(aggregator.findUnique(condition))
+				.toBeNull();
+		});
+
+		it('should throw an error if multiple matches are found', () => {
+			const condition: Function = (value) => value > 1;
+
+			expect(() => {
+				aggregator.findUnique(condition);
+			})
+				.toThrow();
+		});
+	});
+
 	describe('.where()', () => {
 		const condition: Function = (value) => value % 2 === 0;
 

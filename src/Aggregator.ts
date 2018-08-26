@@ -37,6 +37,23 @@ export class Aggregator {
 		return null;
 	}
 
+	findUnique(...args: any[]): any | null {
+		const cond = evalCondition(...args);
+
+		const results: any[] = this._data
+			.filter((elem: any, idx: number) => cond(elem, idx));
+
+		if (results.length > 1) {
+			throw new Error(`Found ${results.length} results`);
+		}
+
+		if (results.length === 0) {
+			return null;
+		}
+		
+		return results[0];
+	}
+
 	where(...args: any[]): Aggregator {
 		const cond = evalCondition(...args);
 
