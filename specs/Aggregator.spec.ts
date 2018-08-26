@@ -253,8 +253,7 @@ describe('Aggregator', () => {
 
 			expect(() => {
 				aggregator.findUnique(condition);
-			})
-				.toThrow();
+			}).toThrow();
 		});
 	});
 
@@ -503,6 +502,7 @@ describe('Aggregator', () => {
 			});
 		});
 	});
+
 	describe('.sort()', () => {
 		it('should sort a list by a field', () => {
 			const data: any[] = [
