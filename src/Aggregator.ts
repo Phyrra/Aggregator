@@ -55,7 +55,7 @@ export class Aggregator {
 		if (results.length === 0) {
 			return null;
 		}
-		
+
 		return results[0];
 	}
 
@@ -135,6 +135,7 @@ export class Aggregator {
 
 						// [ (a, b) => {} ]
 						// [ 'val' | Function, (a, b) => {} ]
+						// [ 'val' | Function, SortOrder ]
 						// [ 'val' | Function, (a, b) => {}, SortOrder ]
 						if (Array.isArray(comparator)) {
 							// (a, b) => {}
@@ -143,10 +144,20 @@ export class Aggregator {
 								order = 1;
 
 							// [ 'val' | Function, (a, b) => {} ]
+							// [ 'val' | Function, SortOrder ]
 							} else if (comparator.length === 2) {
-								keyExtractor = comparator[0];
-								compareFn = comparator[1];
-								order = 1;
+								// [ 'val' | Function, SortOrder ]
+								if (comparator[1] === SortOrder.ASC || comparator[1] === SortOrder.DESC) {
+									keyExtractor = comparator[0];
+									compareFn = compare;
+									order = comparator[1] === SortOrder.ASC ? 1 : -1;
+
+								// [ 'val' | Function, (a, b) => {} ]
+								} else {
+									keyExtractor = comparator[0];
+									compareFn = comparator[1];
+									order = 1;
+								}
 
 							// [ 'val' | Function, (a, b) => {}, SortOrder ]
 							} else {

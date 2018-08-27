@@ -575,7 +575,7 @@ describe('Aggregator', () => {
 				.toEqual([3, 2, 1]);
 		});
 
-		describe('with sorting function', () => {
+		describe('with multiple sorting parameters', () => {
 			const sorter: (a: any, b: any) => number = (a, b) => a - b;
 
 			it('should use the sorting function', () => {
@@ -603,6 +603,23 @@ describe('Aggregator', () => {
 					]);
 			});
 
+			it('should consider the sorting order on extracted value', () => {
+				const data: any[] = [
+					{ value: 1 },
+					{ value: 2 },
+					{ value: 3 }
+				];
+
+				const aggregator: Aggregator = new Aggregator(data);
+
+				expect(aggregator.sort([(elem: any) => elem.value, SortOrder.DESC]).toArray())
+					.toEqual([
+						{ value: 3 },
+						{ value: 2 },
+						{ value: 1 }
+					]);
+			});
+
 			it('should consider the sorting order on the sorting function on extracted values', () => {
 				const data: any[] = [
 					{ value: 1 },
@@ -626,6 +643,10 @@ describe('Aggregator', () => {
 						{ value: 1 }
 					]);
 			});
+		});
+
+		describe('multiple criteria', () => {
+			const sorter: (a: any, b: any) => number = (a, b) => a - b;
 
 			it('should allow to extractor with combine sorter', () => {
 				const data: any[] = [
